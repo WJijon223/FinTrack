@@ -28,7 +28,7 @@ public class SplashScreenController {
         pause.setOnFinished(event -> {
             try {
                 //  Replace MainView.fxml with your actual next screen (login, dashboard, etc.)
-                Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(new Scene(root));
             } catch (IOException e) {
