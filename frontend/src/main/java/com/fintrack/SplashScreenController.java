@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class SplashScreenController {
 
@@ -19,19 +20,25 @@ public class SplashScreenController {
 
     @FXML
     public void initialize() {
-        // Load logo image from /resources (use .jpg or .png depending on your file)
-        Image image = new Image(getClass().getResourceAsStream("/FinTrackLogo.jpg")); // or .png
-        logo.setImage(image);
+        // Load logo image safely
+        URL imageUrl = getClass().getResource("/FinTrackLogo.jpg");
+        if (imageUrl != null) {
+            logo.setImage(new Image(imageUrl.toExternalForm()));
+        } else {
+            System.err.println("Logo image not found!");
+        }
 
-        //  Wait for 3 seconds, then switch to the main screen
+        // Wait for 3 seconds, then switch to Login screen
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> {
             try {
-                //  Replace MainView.fxml with your actual next screen (login, dashboard, etc.)
-                Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                // Fixed: FXML path must begin with '/' and match resources root
+                Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
                 Stage stage = (Stage) logo.getScene().getWindow();
                 stage.setScene(new Scene(root));
+                stage.show(); // Important: show the stage!
             } catch (IOException e) {
+                System.err.println("Failed to load Login.fxml");
                 e.printStackTrace();
             }
         });

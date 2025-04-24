@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fintrack.ResetController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #0e1624;">
+
+    <children>
+        <VBox fx:id="glassPane"
+              alignment="CENTER"
+              spacing="15.0"
+              AnchorPane.topAnchor="100.0"
+              AnchorPane.bottomAnchor="100.0"
+              AnchorPane.leftAnchor="120.0"
+              AnchorPane.rightAnchor="120.0"
+              prefWidth="360.0"
+              style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 20;
+                     -fx-border-color: rgba(255, 255, 255, 0.15); -fx-border-radius: 20;
+                     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);">
+            <padding>
+                <Insets top="30" bottom="30" left="30" right="30"/>
+            </padding>
+            <children>
+                <Label text="Reset Your Password" textFill="#fdfcfc">
+                    <font><Font name="System Bold" size="20.0" /></font>
+                </Label>
+                <PasswordField fx:id="newPass" promptText="Enter your new password" />
+                <PasswordField fx:id="confirmPass" promptText="Confirm your password" />
+                <Label fx:id="strengthLabel" style="-fx-text-fill: #a0a0a0; -fx-font-size: 12px;" />
+                <Button fx:id="saveButton"
+                        onAction="#handleSave"
+                        text="Save"
+                        style="-fx-background-color: #5dc7ff; -fx-text-fill: white;
+                               -fx-background-radius: 8; -fx-font-weight: bold;" />
+                <Hyperlink fx:id="backToLoginLink" onAction="#handleBackToLogin" style="-fx-text-fill: #5dc7ff;" text="Back to Login" />
+
+                style="-fx-text-fill: #5dc7ff;" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

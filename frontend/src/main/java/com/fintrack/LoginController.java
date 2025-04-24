@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML
@@ -34,28 +36,49 @@ public class LoginController {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if ("admin@example.com".equals(email) && "1234".equals(password)) {
-            showAlert("Login Successful", "Welcome back to FinTrack!");
-            // TODO: Navigate to dashboard
-        } else {
-            showAlert("Login Failed", "Invalid email or password.");
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert("Missing Information", "Please enter both email and password.");
+            return;
+        }
+
+        try {
+            // ✅ Corrected path
+            Parent root = FXMLLoader.load(getClass().getResource("/Dashboard.fxml"));
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load dashboard.");
         }
     }
 
     @FXML
     void handleForgotPassword(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("forgot.fxml"));
+            // ✅ Corrected case and path
+            Parent root = FXMLLoader.load(getClass().getResource("/Forgot.fxml"));
             Stage stage = (Stage) forgotLink.getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (Exception e) {
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Could not load forgot password screen.");
         }
     }
 
     @FXML
-    void handleSignup(ActionEvent event) {
-        showAlert("Signup", "Redirect to signup screen (coming soon).");
+    private void handleSignup(ActionEvent event) {
+        try {
+            // ✅ Corrected case and path
+            Parent root = FXMLLoader.load(getClass().getResource("/Signup.fxml"));
+            Stage stage = (Stage) signupLink.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load signup screen.");
+        }
     }
 
     private void showAlert(String title, String message) {

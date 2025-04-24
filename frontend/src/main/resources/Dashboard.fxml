@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:controller="com.fintrack.DashboardController"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17"
+            prefWidth="920.0" prefHeight="600.0"
+            styleClass="root light">
+
+    <left>
+        <VBox spacing="30" alignment="TOP_CENTER" prefWidth="80" styleClass="vbox">
+            <padding><Insets top="40" bottom="20"/></padding>
+            <children>
+                <Button text="🏠" styleClass="button"/>
+                <Button text="📄" styleClass="button"/>
+                <Button text="📅" styleClass="button"/>
+                <Button text="📊" styleClass="button"/>
+                <Button text="👤" styleClass="button"/>
+                <Button text="Toggle Theme" onAction="#toggleTheme" fx:id="themeToggleBtn" styleClass="button" />
+            </children>
+        </VBox>
+    </left>
+
+    <top>
+        <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="vbox">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <children>
+                <Label fx:id="welcomeLabel" text="Welcome back, Dieunie!" styleClass="header-label" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="🚪 Logout" onAction="#handleLogout" styleClass="button" />
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" styleClass="vbox">
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+            <children>
+                <HBox spacing="30" alignment="CENTER">
+                    <children>
+                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
+                            <Label text="" styleClass="label" />
+                            <Label text="Expenses" styleClass="label" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
+                            <Label text="" styleClass="label" />
+                            <Label text="Net Savings" styleClass="label" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
+                            <Label text="" styleClass="label" />
+                            <Label text="Revenue" styleClass="label" />
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <PieChart fx:id="pieChart" title="Spending Breakdown" legendSide="BOTTOM"
+                          prefHeight="300" prefWidth="400" styleClass="chart"/>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

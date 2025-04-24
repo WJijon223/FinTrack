@@ -41,14 +41,16 @@ public class ForgotController {
 
         showAlert("Email Sent", "A password reset link has been sent to: " + email);
 
-        // Simulate delay and transition to reset.fxml
+        // Simulate delay and transition to Reset.fxml
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(e -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("reset.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Reset.fxml")); // ✅ fixed path
                 Stage stage = (Stage) emailField.getScene().getWindow();
                 stage.setScene(new Scene(root));
+                stage.show();
             } catch (IOException ex) {
+                System.err.println("Could not load Reset.fxml");
                 ex.printStackTrace();
             }
         });
@@ -58,10 +60,12 @@ public class ForgotController {
     @FXML
     private void handleBackToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml")); // ✅ fixed path
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
+            System.err.println("Could not load Login.fxml");
             e.printStackTrace();
         }
     }
