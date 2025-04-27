@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fintrack.GraphController">
+    <center>
+        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 20;">
+            <Label text="Yearly Spending Chart" style="-fx-font-size: 20px; -fx-text-fill: white;" />
+            <LineChart fx:id="lineChart" title="Spending Over Months" prefHeight="300" prefWidth="600">
+                <xAxis>
+                    <CategoryAxis label="Month" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Amount" />
+                </yAxis>
+            </LineChart>
+            <TextArea fx:id="summaryText" promptText="Monthly Summary..." prefHeight="100" wrapText="true"/>
+            <Button text="Generate Year to Date Report" onAction="#handleGenerateReport"/>
+        </VBox>
+    </center>
+</BorderPane>

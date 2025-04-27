@@ -1,108 +1,82 @@
-/* ============================
-   GLOBAL STYLES
-============================ */
+/* ========== Global Background ========== */
+
 .root {
-    -fx-font-family: "Segoe UI", "Arial", sans-serif;
-    -fx-font-size: 14px;
-    -fx-padding: 24px;
+
+
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: linear-gradient(to bottom right, #e0ecff, #f5e0ff);
 }
 
-.vbox, .hbox {
-    -fx-spacing: 16px;
-    -fx-alignment: center;
-    -fx-padding: 24px;
-}
 
-/* ============================
-   TEXT STYLES
-============================ */
+
+
+
+/* ========== Labels ========== */
+
 .label {
-    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-font-size: 18px;
 }
 
-.header-label {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-padding: 0 0 10px 0;
-}
 
-/* ============================
-   INPUT FIELDS
-============================ */
-.text-field, .password-field {
-    -fx-pref-width: 240px;
-    -fx-pref-height: 40px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-padding: 0 10px;
-    -fx-font-size: 14px;
-}
 
-/* ============================
-   BUTTONS
-============================ */
+
+
+/* ========== Buttons ========== */
+
 .button {
-    -fx-font-size: 14px;
-    -fx-min-width: 140px;
-    -fx-min-height: 40px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
+    -fx-background-color: #3056A2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
     -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 1);
+    -fx-font-size: 16px;
     -fx-border-color: transparent;
 }
 
-/* ============================
-   LIGHT THEME
-============================ */
-.root.light {
-    -fx-background-color: #FFFFFF;
+
+
+
+
+.button:hover {
+    -fx-background-color: #3a6fd8; /* slightly darker blue on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
-.light .label {
-    -fx-text-fill: #344968;
+
+
+
+
+/* ========== TextFields and PasswordFields ========== */
+
+.text-field, .password-field {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px;
+    -fx-text-fill: #333333;
 }
 
-.light .header-label {
-    -fx-text-fill: #344968;
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3056A2;
 }
 
-.light .button {
-    -fx-background-color: #344968;
-    -fx-text-fill: #FFFFFF;
-}
 
-.light .text-field,
-.light .password-field {
-    -fx-background-color: #F4F4F4;
-    -fx-text-fill: #000000;
-    -fx-border-color: #CCCCCC;
-}
 
-/* ============================
-   DARK THEME
-============================ */
-.root.dark {
-    -fx-background-color: #121212;
-}
 
-.dark .label {
-    -fx-text-fill: #FFFFFF;
-}
 
-.dark .header-label {
-    -fx-text-fill: #AFC6FF;
-}
+/* ========== Cards / Containers ========== */
 
-.dark .button {
-    -fx-background-color: #AFC6FF;
-    -fx-text-fill: #000000;
-}
 
-.dark .text-field,
-.dark .password-field {
-    -fx-background-color: #1E1E1E;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-color: #444444;
+
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
 }

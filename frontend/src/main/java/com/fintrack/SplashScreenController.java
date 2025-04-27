@@ -1,12 +1,14 @@
 package com.fintrack;
 
-import javafx.animation.PauseTransition;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -19,6 +21,12 @@ public class SplashScreenController {
     private ImageView logo;
 
     @FXML
+    private Button getStartedButton;
+
+    @FXML
+    private StackPane root;
+
+    @FXML
     public void initialize() {
         // Load logo image safely
         URL imageUrl = getClass().getResource("/FinTrackLogo.jpg");
@@ -28,20 +36,25 @@ public class SplashScreenController {
             System.err.println("Logo image not found!");
         }
 
-        // Wait for 3 seconds, then switch to Login screen
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> {
-            try {
-                // Fixed: FXML path must begin with '/' and match resources root
-                Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
-                Stage stage = (Stage) logo.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show(); // Important: show the stage!
-            } catch (IOException e) {
-                System.err.println("Failed to load Login.fxml");
-                e.printStackTrace();
-            }
-        });
-        pause.play();
+        // Fade in the root pane for a smooth animation
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1.5), root);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+
+        // Set up Get Started button
+        getStartedButton.setOnAction(event -> goToLogin());
+    }
+
+    private void goToLogin() {
+        try {
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Stage stage = (Stage) logo.getScene().getWindow();
+            stage.setScene(new Scene(loginRoot));
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Failed to load Login.fxml");
+            e.printStackTrace();
+        }
     }
 }
