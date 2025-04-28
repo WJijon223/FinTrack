@@ -42,8 +42,9 @@ public class LoginController {
         }
 
         try {
-            // ✅ Corrected path
-            Parent root = FXMLLoader.load(getClass().getResource("/Dashboard.fxml"));
+
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Dashboard.fxml"));
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -56,8 +57,10 @@ public class LoginController {
     @FXML
     void handleForgotPassword(ActionEvent event) {
         try {
-            // ✅ Corrected case and path
-            Parent root = FXMLLoader.load(getClass().getResource("/Forgot.fxml"));
+
+
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Forgot.fxml"));
             Stage stage = (Stage) forgotLink.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -70,8 +73,10 @@ public class LoginController {
     @FXML
     private void handleSignup(ActionEvent event) {
         try {
-            // ✅ Corrected case and path
-            Parent root = FXMLLoader.load(getClass().getResource("/Signup.fxml"));
+
+
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Signup.fxml"));
             Stage stage = (Stage) signupLink.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

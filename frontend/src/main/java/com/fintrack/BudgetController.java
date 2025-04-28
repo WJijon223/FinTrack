@@ -1,164 +1,89 @@
 package com.fintrack;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
 public class BudgetController {
 
-    // charts
     @FXML
-    private PieChart expenseChart;
-    @FXML
-    private PieChart incomeChart;
+    private ImageView foodIcon;
 
-    // Summaries
     @FXML
-    private VBox expenseSummary;
-    @FXML
-    private VBox incomeSummary;
+    private ImageView housingIcon;
 
-    // Add Category Inputs
     @FXML
-    private TextField categoryNameInput;
+    private ImageView entertainmentIcon;
+
     @FXML
-    private TextField categoryAmountInput;
+    private ImageView transportationIcon;
+
     @FXML
-    private ComboBox<String> categoryTypeDropdown;
+    private ImageView healthcareIcon;
+
     @FXML
-    private Button addCategoryButton;
+    private ImageView utilitiesIcon;
 
 
-
-    // Save/Cancel Buttons
     @FXML
-    private Button cancelButton;
+    private void handleFoodBudget(ActionEvent event) {
+        System.out.println("Food budget button clicked!");
+    }
+
     @FXML
-    private Button saveButton;
+    private void handleHousingBudget(ActionEvent event) {
+        System.out.println("Housing budget button clicked!");
+    }
+
+    @FXML
+    private void handleEntertainmentBudget(ActionEvent event) {
+        System.out.println("Entertainment budget button clicked!");
+    }
+
+    @FXML
+    private void handleTransportationBudget(ActionEvent event) {
+        System.out.println("Transportation budget button clicked!");
+    }
+
+    @FXML
+    private void handleHealthcareBudget(ActionEvent event) {
+        System.out.println("Healthcare budget button clicked!");
+    }
+
+    @FXML
+    private void handleUtilitiesBudget(ActionEvent event) {
+        System.out.println("Utilities budget button clicked!");
+    }
+
+    @FXML
+    private void handleDashboard(ActionEvent event) {
+        System.out.println("Dashboard clicked!");
+    }
+
+    @FXML
+    private void handleBudget(ActionEvent event) {
+        System.out.println("Budget clicked!");
+    }
+
+    @FXML
+    private void handleReport(ActionEvent event) {
+        System.out.println("Report clicked!");
+    }
 
 
-
-
-    // data Lists
-    private final ObservableList<PieChart.Data> expenseData = FXCollections.observableArrayList();
-    private final ObservableList<PieChart.Data> incomeData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-
-
-
-        setupInitialData();
-
-
-        categoryTypeDropdown.setItems(FXCollections.observableArrayList("Expense", "Income"));
-
-
-        addCategoryButton.setOnAction(e -> handleAddCategory());
+        housingIcon.setImage(new Image(getClass().getResource("/images/house_icon.png").toExternalForm()));
+        foodIcon.setImage(new Image(getClass().getResource("/images/restaurant_icon.png").toExternalForm()));
+        entertainmentIcon.setImage(new Image(getClass().getResource("/images/entertainment_icon.png").toExternalForm()));
+        transportationIcon.setImage(new Image(getClass().getResource("/images/transportation_icon.png").toExternalForm()));
+        utilitiesIcon.setImage(new Image(getClass().getResource("/images/utilities_icon.png").toExternalForm()));
+        healthcareIcon.setImage(new Image(getClass().getResource("/images/healthcare_icon.png").toExternalForm()));
     }
 
-    private void setupInitialData() {
-
-
-        //  default expenses
-        expenseData.addAll(
-                new PieChart.Data("Rent", 1200),
-                new PieChart.Data("Food", 800),
-                new PieChart.Data("Transportation", 500)
-        );
-
-        //  default income
-        incomeData.addAll(
-                new PieChart.Data("Spent", 2500),
-                new PieChart.Data("Saved", 1000)
-        );
-
-        expenseChart.setData(expenseData);
-        incomeChart.setData(incomeData);
-
-        updateSummaries();
-    }
-
-    private void handleAddCategory() {
 
 
 
-
-        String name = categoryNameInput.getText();
-        String amountText = categoryAmountInput.getText();
-        String type = categoryTypeDropdown.getValue();
-
-        if (name == null || name.isEmpty() || amountText == null || amountText.isEmpty() || type == null) {
-            System.out.println("Please fill all fields correctly.");
-            return;
-        }
-
-        double amount;
-        try {
-
-            amount = Double.parseDouble(amountText);
-            if (amount <= 0) {
-                System.out.println("Amount must be positive.");
-                return;
-            }
-
-
-        } catch (NumberFormatException e) {
-
-
-            System.out.println("Invalid amount format.");
-            return;
-        }
-
-        if (type.equals("Expense")) {
-            expenseData.add(new PieChart.Data(name, amount));
-        }
-
-        else if (type.equals("Income")) {
-            incomeData.add(new PieChart.Data(name, amount));
-        }
-
-        // refresh charts
-        expenseChart.setData(expenseData);
-        incomeChart.setData(incomeData);
-
-        updateSummaries();
-
-        // clear fields
-        categoryNameInput.clear();
-        categoryAmountInput.clear();
-        categoryTypeDropdown.setValue(null);
-    }
-
-    private void updateSummaries() {
-
-
-
-        expenseSummary.getChildren().clear();
-        incomeSummary.getChildren().clear();
-
-
-        for (PieChart.Data data : expenseData) {
-
-
-            Label label = new Label(data.getName() + ": $" + String.format("%.2f", data.getPieValue()));
-            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
-            expenseSummary.getChildren().add(label);
-        }
-
-        // update Income Summary
-        for (PieChart.Data data : incomeData) {
-
-
-            Label label = new Label(data.getName() + ": $" + String.format("%.2f", data.getPieValue()));
-            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
-            incomeSummary.getChildren().add(label);
-        }
-    }
 }

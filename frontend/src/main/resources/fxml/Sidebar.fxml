@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox fx:controller="com.fintrack.SidebarController" styleClass="sidebar" prefWidth="250" spacing="40" alignment="TOP_CENTER"
+      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Sidebar Header (Logo Area) -->
+    <VBox styleClass="sidebar-header" alignment="CENTER" prefHeight="120">
+        <Label text="FinTrack" styleClass="sidebar-logo"/>
+    </VBox>
+
+    <!-- Navigation Buttons -->
+    <VBox spacing="20" alignment="TOP_CENTER">
+        <Button text="Dashboard" styleClass="sidebar-button-selected" onAction="#handleDashboard"/>
+        <Button text="Budget" styleClass="sidebar-button" onAction="#handleBudget"/>
+        <Button text="Report" styleClass="sidebar-button" onAction="#handleReport"/>
+    </VBox>
+
+    <!-- Bottom Placeholder (for Exit/Settings later) -->
+    <VBox spacing="20" alignment="BOTTOM_CENTER">
+        <!-- Future: Exit or Settings button here -->
+    </VBox>
+
+</VBox>
+
+

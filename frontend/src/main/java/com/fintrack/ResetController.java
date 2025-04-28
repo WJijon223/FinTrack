@@ -72,7 +72,7 @@ public class ResetController {
     private void goToLogin() {
         try {
             // ✅ Fixed the path
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

@@ -33,7 +33,7 @@ public class SplashScreenController {
         // load logo image
 
 
-        URL imageUrl = getClass().getResource("/FinTrackLogo.jpg");
+        URL imageUrl = getClass().getResource("/images/FinTrackLogo.jpg");
         if (imageUrl != null) {
 
 
@@ -66,7 +66,7 @@ public class SplashScreenController {
 
 
         try {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
 
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(new Scene(loginRoot));

@@ -56,7 +56,7 @@ public class DashboardController {
     private void handleLogout() {
         try {
             // ✅ Correct path (Login.fxml is in /resources/)
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Stage stage = (Stage) welcomeLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show(); // ✅ Show the stage after setting scene

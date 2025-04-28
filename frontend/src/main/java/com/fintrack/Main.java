@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Load FXML
-        var splashURL = getClass().getResource("/SplashScreen.fxml");
+        var splashURL = getClass().getResource("/fxml/Budget.fxml");
         if (splashURL == null) {
             throw new RuntimeException("SplashScreen.fxml not found in resources!");
         }
@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
         // Load CSS (update path if needed)
-        var cssURL = getClass().getResource("/style.css");
+        var cssURL = getClass().getResource("/css/style.css");
 
         if (cssURL == null) {
             System.err.println("⚠️ style.css not found! Skipping stylesheet.");

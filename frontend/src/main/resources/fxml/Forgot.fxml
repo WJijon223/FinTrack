@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane style="-fx-background-color: #0e1624;;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.ForgotController">
+<AnchorPane style="-fx-background-color: #0e1624;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.ForgotController">
     <children>
         <VBox fx:id="glassPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="350.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: rgba(255, 255, 255, 0.1);; -fx-background-radius: 20; -fx-border-color: rgba(255,255,255,0.2);; -fx-border-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.1), 10, 0, 0, 0);;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="100.0">
             <children>

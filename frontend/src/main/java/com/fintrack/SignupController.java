@@ -46,7 +46,7 @@ public class SignupController {
 
     private void goToLogin() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml")); // ✅ Fixed path
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml")); // ✅ Fixed path
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show(); // ✅ Ensure window updates
