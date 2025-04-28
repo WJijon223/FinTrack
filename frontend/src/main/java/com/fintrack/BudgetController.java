@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 
 public class BudgetController {
 
-    // Charts
+    // charts
     @FXML
     private PieChart expenseChart;
     @FXML
@@ -34,37 +34,46 @@ public class BudgetController {
     @FXML
     private Button addCategoryButton;
 
+
+
     // Save/Cancel Buttons
     @FXML
     private Button cancelButton;
     @FXML
     private Button saveButton;
 
-    // Data Lists
+
+
+
+    // data Lists
     private final ObservableList<PieChart.Data> expenseData = FXCollections.observableArrayList();
     private final ObservableList<PieChart.Data> incomeData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Setup initial categories
+
+
+
         setupInitialData();
 
-        // Setup dropdown options
+
         categoryTypeDropdown.setItems(FXCollections.observableArrayList("Expense", "Income"));
 
-        // Setup Add Category Button
+
         addCategoryButton.setOnAction(e -> handleAddCategory());
     }
 
     private void setupInitialData() {
-        // Add default expenses
+
+
+        //  default expenses
         expenseData.addAll(
                 new PieChart.Data("Rent", 1200),
                 new PieChart.Data("Food", 800),
                 new PieChart.Data("Transportation", 500)
         );
 
-        // Add default income
+        //  default income
         incomeData.addAll(
                 new PieChart.Data("Spent", 2500),
                 new PieChart.Data("Saved", 1000)
@@ -77,6 +86,10 @@ public class BudgetController {
     }
 
     private void handleAddCategory() {
+
+
+
+
         String name = categoryNameInput.getText();
         String amountText = categoryAmountInput.getText();
         String type = categoryTypeDropdown.getValue();
@@ -88,48 +101,61 @@ public class BudgetController {
 
         double amount;
         try {
+
             amount = Double.parseDouble(amountText);
             if (amount <= 0) {
                 System.out.println("Amount must be positive.");
                 return;
             }
+
+
         } catch (NumberFormatException e) {
+
+
             System.out.println("Invalid amount format.");
             return;
         }
 
         if (type.equals("Expense")) {
             expenseData.add(new PieChart.Data(name, amount));
-        } else if (type.equals("Income")) {
+        }
+
+        else if (type.equals("Income")) {
             incomeData.add(new PieChart.Data(name, amount));
         }
 
-        // Refresh charts
+        // refresh charts
         expenseChart.setData(expenseData);
         incomeChart.setData(incomeData);
 
         updateSummaries();
 
-        // Clear fields
+        // clear fields
         categoryNameInput.clear();
         categoryAmountInput.clear();
         categoryTypeDropdown.setValue(null);
     }
 
     private void updateSummaries() {
-        // Clear old summaries
+
+
+
         expenseSummary.getChildren().clear();
         incomeSummary.getChildren().clear();
 
-        // Update Expense Summary
+
         for (PieChart.Data data : expenseData) {
+
+
             Label label = new Label(data.getName() + ": $" + String.format("%.2f", data.getPieValue()));
             label.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
             expenseSummary.getChildren().add(label);
         }
 
-        // Update Income Summary
+        // update Income Summary
         for (PieChart.Data data : incomeData) {
+
+
             Label label = new Label(data.getName() + ": $" + String.format("%.2f", data.getPieValue()));
             label.setStyle("-fx-font-size: 14px; -fx-text-fill: #555;");
             incomeSummary.getChildren().add(label);

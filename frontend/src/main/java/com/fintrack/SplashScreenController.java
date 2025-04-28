@@ -28,31 +28,54 @@ public class SplashScreenController {
 
     @FXML
     public void initialize() {
-        // Load logo image safely
+
+
+        // load logo image
+
+
         URL imageUrl = getClass().getResource("/FinTrackLogo.jpg");
         if (imageUrl != null) {
+
+
             logo.setImage(new Image(imageUrl.toExternalForm()));
-        } else {
+        } else
+
+
+        {
             System.err.println("Logo image not found!");
         }
 
-        // Fade in the root pane for a smooth animation
+
+
+        // fade in animation
+
+
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1.5), root);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        // Set up Get Started button
+
+
+        // set up "start" button
+
         getStartedButton.setOnAction(event -> goToLogin());
     }
 
     private void goToLogin() {
+
+
         try {
             Parent loginRoot = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+
             Stage stage = (Stage) logo.getScene().getWindow();
             stage.setScene(new Scene(loginRoot));
             stage.show();
-        } catch (IOException e) {
+
+
+        }
+
+        catch (IOException e) {
             System.err.println("Failed to load Login.fxml");
             e.printStackTrace();
         }
