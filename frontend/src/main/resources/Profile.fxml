@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fintrack.ProfileController"
+      alignment="CENTER" spacing="20" style="-fx-background-color: #0e1624;"
+      prefWidth="600" prefHeight="400">
+
+    <padding><Insets top="30" bottom="30" left="30" right="30"/></padding>
+
+    <ImageView fx:id="profileImage" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+
+    <Label fx:id="nameLabel" text="Your Name" style="-fx-text-fill: white;">
+        <font><Font name="System Bold" size="18"/></font>
+    </Label>
+
+    <Label fx:id="emailLabel" text="your.email@example.com" style="-fx-text-fill: #cccccc;">
+        <font><Font size="14"/></font>
+    </Label>
+
+    <Button fx:id="editProfileButton" text="Edit Profile" style="-fx-background-radius: 10; -fx-background-color: #5dc7ff; -fx-text-fill: white;"/>
+
+    <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout"
+            style="-fx-background-radius: 10; -fx-background-color: red; -fx-text-fill: white;"/>
+
+</VBox>

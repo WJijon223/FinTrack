@@ -32,11 +32,22 @@ public class SplashScreenController {
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> {
             try {
-                // Fixed: FXML path must begin with '/' and match resources root
+                // Load the login screen
                 Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
-                Stage stage = (Stage) logo.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show(); // Important: show the stage!
+                Stage stage = (Stage) logo.getScene().getWindow(); // Get the current stage
+                Scene scene = new Scene(root);
+
+                // Load the CSS for the login screen
+                URL cssUrl = getClass().getResource("/style.css");
+                if (cssUrl != null) {
+                    scene.getStylesheets().add(cssUrl.toExternalForm());
+                } else {
+                    System.err.println("style.css not found for Login screen!");
+                }
+
+                stage.setScene(scene);
+                stage.setTitle("FinTrack Login");
+                stage.show();
             } catch (IOException e) {
                 System.err.println("Failed to load Login.fxml");
                 e.printStackTrace();

@@ -17,16 +17,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(splashURL);
         Scene scene = new Scene(root);
 
-        // Load CSS (update path if needed)
-        var cssURL = getClass().getResource("/style.css"); // ✅ fixed
-
-        if (cssURL == null) {
-            System.err.println("⚠️ style.css not found! Skipping stylesheet.");
-        } else {
-            scene.getStylesheets().add(cssURL.toExternalForm());
-        }
-
-
         stage.setTitle("FinTrack");
         stage.setScene(scene);
         stage.show();

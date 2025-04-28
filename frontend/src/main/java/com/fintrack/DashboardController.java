@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class DashboardController {
 
@@ -18,6 +20,14 @@ public class DashboardController {
 
     @FXML
     private PieChart pieChart;
+    @FXML
+    private Button homeButton;
+
+
+    @FXML
+    private Button themeToggleBtn;
+
+    private boolean isDarkMode = false;
 
     @FXML
     public void initialize() {
@@ -29,17 +39,12 @@ public class DashboardController {
                 new PieChart.Data("Shopping", 350)
         );
     }
-    @FXML
-    private Button themeToggleBtn;
-
-    private boolean isDarkMode = false;
 
     @FXML
     private void toggleTheme() {
         Scene scene = themeToggleBtn.getScene();
         Parent root = scene.getRoot();
 
-        // Clear previous theme style class
         if (isDarkMode) {
             root.getStyleClass().remove("dark");
             root.getStyleClass().add("light");
@@ -51,18 +56,46 @@ public class DashboardController {
         isDarkMode = !isDarkMode;
     }
 
-
     @FXML
     private void handleLogout() {
         try {
-            // ✅ Correct path (Login.fxml is in /resources/)
             Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
             Stage stage = (Stage) welcomeLabel.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show(); // ✅ Show the stage after setting scene
+            Scene scene = new Scene(root);
+
+            URL cssUrl = getClass().getResource("/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            stage.setScene(scene);
+            stage.setTitle("FinTrack Login");
+            stage.show();
         } catch (IOException e) {
             System.err.println("Failed to load Login.fxml");
             e.printStackTrace();
         }
     }
+    @FXML
+    private void openTransactions() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Transactions.fxml"));
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("FinTrack - Transactions");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load Transactions screen.");
+        }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 }

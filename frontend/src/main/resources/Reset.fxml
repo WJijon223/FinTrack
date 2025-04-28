@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17"
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.fintrack.ResetController"
             prefHeight="400.0" prefWidth="600.0"
@@ -20,27 +20,44 @@
               AnchorPane.leftAnchor="120.0"
               AnchorPane.rightAnchor="120.0"
               prefWidth="360.0"
-              style="-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 20;
-                     -fx-border-color: rgba(255, 255, 255, 0.15); -fx-border-radius: 20;
+              style="-fx-background-color: rgba(255, 255, 255, 0.08);
+                     -fx-background-radius: 20;
+                     -fx-border-color: rgba(255, 255, 255, 0.15);
+                     -fx-border-radius: 20;
                      -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);">
             <padding>
-                <Insets top="30" bottom="30" left="30" right="30"/>
+                <Insets top="30.0" bottom="30.0" left="30.0" right="30.0"/>
             </padding>
             <children>
-                <Label text="Reset Your Password" textFill="#fdfcfc">
-                    <font><Font name="System Bold" size="20.0" /></font>
-                </Label>
-                <PasswordField fx:id="newPass" promptText="Enter your new password" />
-                <PasswordField fx:id="confirmPass" promptText="Confirm your password" />
-                <Label fx:id="strengthLabel" style="-fx-text-fill: #a0a0a0; -fx-font-size: 12px;" />
-                <Button fx:id="saveButton"
-                        onAction="#handleSave"
-                        text="Save"
-                        style="-fx-background-color: #5dc7ff; -fx-text-fill: white;
-                               -fx-background-radius: 8; -fx-font-weight: bold;" />
-                <Hyperlink fx:id="backToLoginLink" onAction="#handleBackToLogin" style="-fx-text-fill: #5dc7ff;" text="Back to Login" />
 
-                style="-fx-text-fill: #5dc7ff;" />
+                <!-- Page Title -->
+                <Label text="Reset your password" textFill="#fdfcfc">
+                    <font><Font name="System Bold" size="20.0"/></font>
+                </Label>
+
+                <!-- EMAIL FIELD (important) -->
+                <TextField fx:id="emailField"
+                           promptText="Enter Your Email"
+                           style="-fx-background-color: #1a1f2e;
+                                  -fx-text-fill: white;
+                                  -fx-prompt-text-fill: white;
+                                  -fx-background-radius: 8;" />
+
+                <!-- Reset Button -->
+                <Button fx:id="saveButton"
+                        text="Reset"
+                        onAction="#handleSave"
+                        style="-fx-background-color: #5dc7ff;
+                               -fx-text-fill: white;
+                               -fx-background-radius: 8;
+                               -fx-font-weight: bold;" />
+
+                <!-- Back to Login -->
+                <Hyperlink fx:id="backToLoginLink"
+                           text="Back to Login"
+                           onAction="#handleBackToLogin"
+                           style="-fx-text-fill: #5dc7ff;" />
+
             </children>
         </VBox>
     </children>

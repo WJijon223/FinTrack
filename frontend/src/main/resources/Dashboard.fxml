@@ -7,7 +7,7 @@
 
 <BorderPane fx:controller="com.fintrack.DashboardController"
             xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/17"
+            xmlns="http://javafx.com/javafx/23.0.1"
             prefWidth="920.0" prefHeight="600.0"
             styleClass="root light">
 
@@ -15,14 +15,15 @@
         <VBox spacing="30" alignment="TOP_CENTER" prefWidth="80" styleClass="vbox">
             <padding><Insets top="40" bottom="20"/></padding>
             <children>
-                <Button text="🏠" styleClass="button"/>
-                <Button text="📄" styleClass="button"/>
-                <Button text="📅" styleClass="button"/>
-                <Button text="📊" styleClass="button"/>
-                <Button text="👤" styleClass="button"/>
-                <Button text="Toggle Theme" onAction="#toggleTheme" fx:id="themeToggleBtn" styleClass="button" />
+                <Button text="🏠" styleClass="icon-button" fx:id="homeButton"/>
+                <Button text="📄" styleClass="icon-button" fx:id="transactionButton" onAction="#openTransactions"/>
+                <Button text="📅" styleClass="icon-button"/>
+                <Button text="📊" styleClass="icon-button"/>
+                <Button text="👤" styleClass="icon-button"/>
+                <Button text="Toggle Theme" fx:id="themeToggleBtn" onAction="#toggleTheme" styleClass="icon-button"/>
             </children>
         </VBox>
+
     </left>
 
     <top>
@@ -37,9 +38,10 @@
     </top>
 
     <center>
-        <VBox alignment="TOP_CENTER" spacing="20" styleClass="vbox">
-            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
-            <children>
+        <VBox alignment="TOP_CENTER" spacing="20"
+              style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);"
+              styleClass="vbox">
+        <children>
                 <HBox spacing="30" alignment="CENTER">
                     <children>
                         <VBox alignment="CENTER" spacing="5" styleClass="vbox">

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class SignupController {
 
@@ -46,10 +47,18 @@ public class SignupController {
 
     private void goToLogin() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml")); // ✅ Fixed path
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
             Stage stage = (Stage) nameField.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show(); // ✅ Ensure window updates
+            Scene scene = new Scene(root);
+
+            URL cssUrl = getClass().getResource("/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            stage.setScene(scene);
+            stage.setTitle("FinTrack Login");
+            stage.show();
         } catch (IOException e) {
             System.err.println("Could not load Login.fxml");
             e.printStackTrace();

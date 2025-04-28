@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class ForgotController {
 
@@ -45,9 +46,17 @@ public class ForgotController {
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(e -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/Reset.fxml")); // ✅ fixed path
+                Parent root = FXMLLoader.load(getClass().getResource("/Reset.fxml"));
                 Stage stage = (Stage) emailField.getScene().getWindow();
-                stage.setScene(new Scene(root));
+                Scene scene = new Scene(root);
+
+                URL cssUrl = getClass().getResource("/style.css");
+                if (cssUrl != null) {
+                    scene.getStylesheets().add(cssUrl.toExternalForm());
+                }
+
+                stage.setScene(scene);
+                stage.setTitle("Reset Password");
                 stage.show();
             } catch (IOException ex) {
                 System.err.println("Could not load Reset.fxml");
@@ -60,9 +69,17 @@ public class ForgotController {
     @FXML
     private void handleBackToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml")); // ✅ fixed path
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+
+            URL cssUrl = getClass().getResource("/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            stage.setScene(scene);
+            stage.setTitle("FinTrack Login");
             stage.show();
         } catch (IOException e) {
             System.err.println("Could not load Login.fxml");
