@@ -1,0 +1,137 @@
+/*  global background (Dark Mode)  */
+
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: linear-gradient(to bottom right, #1e1e1e, #2a2a2a);
+}
+
+/*  labels  */
+
+.label {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-size: 18px;
+}
+
+/* buttons */
+
+
+
+
+
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 6, 0, 0, 1);
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+}
+
+.button:hover {
+    -fx-background-color: #5dade2;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/*  TextFields and PasswordFields */
+
+.text-field, .password-field {
+    -fx-background-color: #333333;
+    -fx-border-color: #555555;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px;
+    -fx-text-fill: #f0f0f0;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3498db;
+}
+
+/*  Cards / Containers (budget) */
+
+.card {
+    -fx-background-color: #2c2c2c;
+    -fx-background-radius: 16px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 2);
+}
+
+
+
+/* card hover */
+.card:hover {
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 12, 0, 0, 4);
+    -fx-background-color: #2c2c2c;
+    -fx-cursor: hand;
+}
+
+
+
+/* ========== sidebar container (Dark) ========== */
+
+.sidebar {
+    -fx-background-color: #121212;
+    -fx-padding: 0;
+}
+
+
+
+
+
+/* sidebar header */
+.sidebar-header {
+    -fx-background-color: #121212;
+    -fx-padding: 30px 0 0 0;
+}
+
+
+
+
+
+/* sidebar logo */
+.sidebar-logo {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+
+/* sidebar button */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 16px;
+    -fx-font-weight: normal;
+    -fx-pref-width: 180px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: white;
+}
+
+
+
+
+/* sidebar button selected */
+.sidebar-button-selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-pref-width: 180px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}

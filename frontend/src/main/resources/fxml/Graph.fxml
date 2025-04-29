@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fintrack.GraphController">
-    <center>
-        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 20;">
-            <Label text="Yearly Spending Chart" style="-fx-font-size: 20px; -fx-text-fill: white;" />
-            <LineChart fx:id="lineChart" title="Spending Over Months" prefHeight="300" prefWidth="600">
-                <xAxis>
-                    <CategoryAxis label="Month" />
-                </xAxis>
-                <yAxis>
-                    <NumberAxis label="Amount" />
-                </yAxis>
-            </LineChart>
-            <TextArea fx:id="summaryText" promptText="Monthly Summary..." prefHeight="100" wrapText="true"/>
-            <Button text="Generate Year to Date Report" onAction="#handleGenerateReport"/>
-        </VBox>
-    </center>
-</BorderPane>
+<VBox spacing="20.0" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.fintrack.GraphController"
+      stylesheets="style.css">
+
+    <!-- Title -->
+    <Label fx:id="titleLabel" text="Yearly Financial Overview" styleClass="label-title"/>
+
+    <!-- Line Chart -->
+    <LineChart fx:id="lineChart" prefHeight="400.0" prefWidth="800.0">
+        <xAxis>
+            <NumberAxis label="Month"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Amount ($)"/>
+        </yAxis>
+    </LineChart>
+
+    <!-- Button Section -->
+    <HBox spacing="20.0" alignment="CENTER_LEFT">
+        <Button fx:id="generateReportButton" text="Generate Year to Date Report" styleClass="button-generate-report"/>
+    </HBox>
+
+    <!-- Summary Text -->
+    <Label fx:id="summaryLabel" text="Summary description goes here..." wrapText="true" maxWidth="800.0" styleClass="label-summary"/>
+</VBox>

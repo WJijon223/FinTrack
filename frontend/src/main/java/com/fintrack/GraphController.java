@@ -3,35 +3,63 @@ package com.fintrack;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class GraphController {
 
     @FXML
-    private LineChart<String, Number> lineChart;
+    private Label titleLabel;
 
     @FXML
-    private TextArea summaryText;
+    private LineChart<Number, Number> lineChart;
 
     @FXML
-    public void initialize() {
-        XYChart.Series<String, Number> rent = new XYChart.Series<>();
-        rent.setName("Rent");
-        rent.getData().add(new XYChart.Data<>("Jan", 750));
-        rent.getData().add(new XYChart.Data<>("Feb", 750));
-        rent.getData().add(new XYChart.Data<>("Mar", 750));
+    private Button generateReportButton;
 
-        XYChart.Series<String, Number> groceries = new XYChart.Series<>();
-        groceries.setName("Restaurants & Groceries");
-        groceries.getData().add(new XYChart.Data<>("Jan", 500));
-        groceries.getData().add(new XYChart.Data<>("Feb", 450));
-        groceries.getData().add(new XYChart.Data<>("Mar", 570));
+    @FXML
+    private Label summaryLabel;
 
-        lineChart.getData().addAll(rent, groceries);
+    @FXML
+    private void initialize() {
+        setupChart();
+        setupButton();
     }
 
-    @FXML
-    private void handleGenerateReport() {
-        summaryText.setText("Report generated: Rent and groceries stayed fairly consistent with a slight uptick in March.");
+    private void setupChart() {
+
+
+
+
+        // dummy data
+        XYChart.Series<Number, Number> incomeSeries = new XYChart.Series<>();
+        incomeSeries.setName("Income");
+
+        XYChart.Series<Number, Number> expensesSeries = new XYChart.Series<>();
+        expensesSeries.setName("Expenses");
+
+
+
+
+        // fake monthly data
+
+
+        for (int month = 1; month <= 12; month++) {
+            incomeSeries.getData().add(new XYChart.Data<>(month, 3000 + Math.random() * 1000));
+            expensesSeries.getData().add(new XYChart.Data<>(month, 2000 + Math.random() * 800));
+        }
+
+
+
+        lineChart.getData().addAll(incomeSeries, expensesSeries);
+    }
+
+    private void setupButton() {
+        generateReportButton.setOnAction(event -> {
+
+
+            System.out.println(" Generate Report button clicked!");
+            // later: generate actual report here
+        });
     }
 }

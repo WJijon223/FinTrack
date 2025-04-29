@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Load FXML
-        var splashURL = getClass().getResource("/fxml/Budget.fxml");
+        var splashURL = getClass().getResource("/fxml/Graph.fxml");
         if (splashURL == null) {
             throw new RuntimeException("SplashScreen.fxml not found in resources!");
         }
