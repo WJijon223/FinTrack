@@ -2,28 +2,85 @@
    GLOBAL STYLES
 ============================ */
 .root {
-    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-family: "Roboto", "Arial", sans-serif;
     -fx-font-size: 14px;
-    -fx-padding: 24px;
 }
 
-.vbox, .hbox {
-    -fx-spacing: 16px;
-    -fx-alignment: center;
-    -fx-padding: 24px;
+/* ============================
+   LIGHT THEME
+============================ */
+.root.light {
+    -fx-background-color: #0a2145; /* Navy blue for light theme */
+}
+
+/* ============================
+   DARK THEME
+============================ */
+.root.dark {
+    -fx-background-color: #122c2e; /* Deep midnight black for dark theme */
+}
+
+/* ============================
+   GLASSMORPHISM EFFECT (Used for VBoxes, cards, etc.)
+============================ */
+.glass-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+    -fx-padding: 20;
+}
+
+.root.dark .glass-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================
    TEXT STYLES
 ============================ */
-.label {
-    -fx-font-size: 16px;
-}
-
 .header-label {
+    -fx-font-family: "Roboto";
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-padding: 0 0 10px 0;
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .header-label {
+    -fx-text-fill: #e0e0e0;
+}
+
+.label {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .label {
+    -fx-text-fill: #cccccc;
+}
+
+/* Used in Dashboard for summary cards */
+.summary-label {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .summary-label {
+    -fx-text-fill: #cccccc;
+}
+
+.summary-value {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .summary-value {
+    -fx-text-fill: #e0e0e0;
 }
 
 /* ============================
@@ -32,77 +89,353 @@
 .text-field, .password-field {
     -fx-pref-width: 240px;
     -fx-pref-height: 40px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1px;
-    -fx-padding: 0 10px;
+    -fx-background-color: #1a1f2e;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #cccccc;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1;
+    -fx-padding: 0 10;
     -fx-font-size: 14px;
+}
+
+.root.dark .text-field,
+.root.dark .password-field {
+    -fx-background-color: #2a2f3e;
+    -fx-border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================
    BUTTONS
 ============================ */
 .button {
+    -fx-font-family: "Roboto";
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
     -fx-min-width: 140px;
     -fx-min-height: 40px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
+    -fx-background-color: #4682B4; /* Steel blue */
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
     -fx-cursor: hand;
     -fx-border-color: transparent;
 }
 
+.button:hover {
+    -fx-background-color: #5A9BD5; /* Lighter blue on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
+}
+
+.root.dark .button {
+    -fx-background-color: #5A9BD5;
+}
+
+.root.dark .button:hover {
+    -fx-background-color: #6AAFE6;
+}
+
+/* Sidebar buttons (used in Dashboard, Transactions, etc.) */
+.sidebar-button {
+    -fx-background-color: #4682B4;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #5A9BD5;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
+}
+
+.root.dark .sidebar-button {
+    -fx-background-color: #5A9BD5;
+}
+
+.root.dark .sidebar-button:hover {
+    -fx-background-color: #6AAFE6;
+}
+
+/* Logout button */
+.logout-button {
+    -fx-background-color: #FF5733; /* Orange */
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15;
+    -fx-padding: 8 15 8 15;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #FF704D;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.root.dark .logout-button {
+    -fx-background-color: #FF704D;
+}
+
+.root.dark .logout-button:hover {
+    -fx-background-color: #FF8966;
+}
+
+/* Save button (used in Transactions) */
+.save-btn {
+    -fx-background-color: #32CD32; /* Lime green */
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.save-btn:hover {
+    -fx-background-color: #45FF45;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.root.dark .save-btn {
+    -fx-background-color: #45FF45;
+}
+
+.root.dark .save-btn:hover {
+    -fx-background-color: #58FF58;
+}
+
 /* ============================
-   LIGHT THEME
+   HYPERLINKS
 ============================ */
-.root.light {
-    -fx-background-color: #FFFFFF;
+.hyperlink {
+    -fx-text-fill: #5dc7ff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
 }
 
-.light .label {
-    -fx-text-fill: #344968;
+.hyperlink:hover {
+    -fx-text-fill: #7ed5ff;
+    -fx-underline: true;
 }
 
-.light .header-label {
-    -fx-text-fill: #344968;
+.root.dark .hyperlink {
+    -fx-text-fill: #7ed5ff;
 }
 
-.light .button {
-    -fx-background-color: #344968;
-    -fx-text-fill: #FFFFFF;
-}
-
-.light .text-field,
-.light .password-field {
-    -fx-background-color: #F4F4F4;
-    -fx-text-fill: #000000;
-    -fx-border-color: #CCCCCC;
+.root.dark .hyperlink:hover {
+    -fx-text-fill: #9edaff;
 }
 
 /* ============================
-   DARK THEME
+   CHECKBOX
 ============================ */
-.root.dark {
-    -fx-background-color: #121212;
+.check-box {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
 }
 
-.dark .label {
-    -fx-text-fill: #FFFFFF;
+.root.dark .check-box {
+    -fx-text-fill: #e0e0e0;
 }
 
-.dark .header-label {
-    -fx-text-fill: #AFC6FF;
+/* ============================
+   IMAGE VIEW (Logos, Profile Pictures)
+============================ */
+.image-view {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-border-color: #4682B4;
+    -fx-border-width: 2;
 }
 
-.dark .button {
-    -fx-background-color: #AFC6FF;
-    -fx-text-fill: #000000;
+/* ============================
+   SIDEBAR (Used in Dashboard, Transactions, Reports, Calendar, Analytics)
+============================ */
+.sidebar {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 0 20 20 0;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 0 1 0 0;
+    -fx-border-radius: 0 20 20 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 5, 0);
 }
 
-.dark .text-field,
-.dark .password-field {
-    -fx-background-color: #1E1E1E;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-color: #444444;
+.root.dark .sidebar {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================
+   TOP BAR (Used in Dashboard, Transactions, Reports, Calendar, Analytics)
+============================ */
+.topbar {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 0 0 20 20;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 0 0 20 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+}
+
+.root.dark .topbar {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================
+   SCROLL PANE (Used in Dashboard)
+============================ */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ============================
+   CONTENT GRID (Used in Dashboard)
+============================ */
+.content-grid {
+    -fx-background-color: transparent;
+}
+
+/* ============================
+   SUMMARY CARDS (Used in Dashboard)
+============================ */
+.summary-card {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-radius: 15;
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.root.dark .summary-card {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================
+   PIE CHART (Used in Dashboard)
+============================ */
+.chart {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.root.dark .chart {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+.chart-title {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .chart-title {
+    -fx-text-fill: #e0e0e0;
+}
+
+/* Pie Chart Colors */
+.default-color0.chart-pie { -fx-pie-color: #4682B4; } /* Rent - Steel blue */
+.default-color1.chart-pie { -fx-pie-color: #87CEEB; } /* Food - Light blue */
+.default-color2.chart-pie { -fx-pie-color: #FFA500; } /* Shopping - Orange */
+
+/* Pie Chart Legend */
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 50%;
+}
+
+.chart-pie-label {
+    -fx-fill: #ffffff;
+    -fx-font-size: 12px;
+}
+
+/* ============================
+   TABLE VIEW (Used in Transactions)
+============================ */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 10;
+}
+
+.root.dark .table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(255, 255, 255, 0.15);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.root.dark .table-view .column-header-background {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Roboto";
+    -fx-font-weight: bold;
+}
+
+.root.dark .table-view .column-header .label {
+    -fx-text-fill: #e0e0e0;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+}
+
+.root.dark .table-view .table-cell {
+    -fx-text-fill: #e0e0e0;
+}
+
+/* ============================
+   DATE PICKER (Used in Transactions)
+============================ */
+.date-picker .text-field {
+    -fx-pref-width: 120px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #4682B4;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #5A9BD5;
+}
+
+.root.dark .date-picker .arrow-button {
+    -fx-background-color: #5A9BD5;
+}
+
+.root.dark .date-picker .arrow-button:hover {
+    -fx-background-color: #6AAFE6;
 }

@@ -1,5 +1,6 @@
 package com.fintrack;
 
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.format.DateTimeFormatter;
 
 public class TransactionsController {
@@ -42,13 +45,28 @@ public class TransactionsController {
     }
 
     @FXML
+    private void navigateToHome() {
+        navigateToScreen("/Dashboard.fxml", "FinTrack Dashboard");
+    }
+
+    @FXML
+    private void navigateToTransactions() {
+        // Already on Transactions screen
+        System.out.println("Already on Transactions screen.");
+    }
+
+    @FXML
     private void setExpenseType() {
         selectedType = "Expense";
+        expenseBtn.setStyle("-fx-background-color: #FF5733; -fx-text-fill: white;");
+        revenueBtn.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white;");
     }
 
     @FXML
     private void setRevenueType() {
         selectedType = "Revenue";
+        revenueBtn.setStyle("-fx-background-color: #FF5733; -fx-text-fill: white;");
+        expenseBtn.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white;");
     }
 
     @FXML
@@ -85,15 +103,61 @@ public class TransactionsController {
     private void toggleTheme() {
         BorderPane root = (BorderPane) amountField.getScene().getRoot();
 
-        if (isDarkMode) {
-            root.getStyleClass().remove("dark");
-            root.getStyleClass().add("light");
-        } else {
-            root.getStyleClass().remove("light");
-            root.getStyleClass().add("dark");
-        }
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), root);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.8);
+        fadeOut.setOnFinished(event -> {
+            if (isDarkMode) {
+                root.getStyleClass().remove("dark");
+                root.getStyleClass().add("light");
+                themeToggleBtn.setText("🌙");
+            } else {
+                root.getStyleClass().remove("light");
+                root.getStyleClass().add("dark");
+                themeToggleBtn.setText("☀");
+            }
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
+            fadeIn.setFromValue(0.8);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+        fadeOut.play();
 
         isDarkMode = !isDarkMode;
+    }
+
+    private void navigateToScreen(String fxmlPath, String title) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            URL cssUrl = getClass().getResource("/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            root.getStyleClass().add(isDarkMode ? "dark" : "light");
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(200), homeButton.getScene().getRoot());
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(e -> {
+                stage.setScene(scene);
+                stage.setTitle(title);
+
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+                stage.show();
+            });
+            fadeOut.play();
+        } catch (IOException e) {
+            System.err.println("Failed to load " + fxmlPath);
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(String title, String content) {

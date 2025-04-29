@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class LoginController {
 
@@ -34,35 +33,25 @@ public class LoginController {
 
     @FXML
     void handleLogin(ActionEvent event) {
-        System.out.println("Login button clicked!");
         String email = emailField.getText();
         String password = passwordField.getText();
 
         if (email.isEmpty() || password.isEmpty()) {
-            showAlert("Missing Information", "Please enter both email and password.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Missing Information");
+            alert.setContentText("Please enter both email and password.");
+            alert.showAndWait();
             return;
         }
 
         try {
-            System.out.println("Resource URL for Dashboard.fxml: " + getClass().getResource("/Dashboard.fxml"));
             Parent root = FXMLLoader.load(getClass().getResource("/Dashboard.fxml"));
             Stage stage = (Stage) loginButton.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            // Load CSS for the dashboard
-            URL cssUrl = getClass().getResource("/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            } else {
-                System.err.println("style.css not found for Dashboard screen!");
-            }
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("FinTrack Dashboard");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load dashboard: " + e.getMessage());
         }
     }
 
@@ -71,19 +60,11 @@ public class LoginController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Forgot.fxml"));
             Stage stage = (Stage) forgotLink.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            URL cssUrl = getClass().getResource("/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            }
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("Forgot Password");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load forgot password screen.");
         }
     }
 
@@ -92,26 +73,11 @@ public class LoginController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Signup.fxml"));
             Stage stage = (Stage) signupLink.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            URL cssUrl = getClass().getResource("/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            }
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("Sign Up");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load signup screen.");
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

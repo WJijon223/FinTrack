@@ -5,63 +5,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="com.fintrack.DashboardController"
-            xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            prefWidth="920.0" prefHeight="600.0"
-            styleClass="root light">
-
+<BorderPane fx:controller="com.fintrack.DashboardController" xmlns:fx="http://javafx.com/fxml/1" styleClass="root">
+    <!-- Left Sidebar -->
     <left>
-        <VBox spacing="30" alignment="TOP_CENTER" prefWidth="80" styleClass="vbox">
-            <padding><Insets top="40" bottom="20"/></padding>
-            <children>
-                <Button text="🏠" styleClass="icon-button" fx:id="homeButton"/>
-                <Button text="📄" styleClass="icon-button" fx:id="transactionButton" onAction="#openTransactions"/>
-                <Button text="📅" styleClass="icon-button"/>
-                <Button text="📊" styleClass="icon-button"/>
-                <Button text="👤" styleClass="icon-button"/>
-                <Button text="Toggle Theme" fx:id="themeToggleBtn" onAction="#toggleTheme" styleClass="icon-button"/>
-            </children>
+        <VBox spacing="20" alignment="TOP_CENTER" prefWidth="80" styleClass="sidebar">
+            <padding>
+                <Insets top="30" bottom="20"/>
+            </padding>
+            <Button text="🏠" styleClass="sidebar-button" onAction="#navigateToHome"/>
+            <Button text="📄" styleClass="sidebar-button" onAction="#navigateToReports"/>
+            <Button text="📅" styleClass="sidebar-button" onAction="#navigateToCalendar"/>
+            <Button text="📊" styleClass="sidebar-button" onAction="#navigateToAnalytics"/>
+            <Button text="👤" styleClass="sidebar-button" onAction="#navigateToProfile"/>
+            <Button fx:id="themeToggleBtn" text="🌙" styleClass="sidebar-button" onAction="#toggleTheme"/>
         </VBox>
-
     </left>
 
+    <!-- Top Bar -->
     <top>
-        <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="vbox">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <children>
-                <Label fx:id="welcomeLabel" text="Welcome back, Dieunie!" styleClass="header-label" />
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="🚪 Logout" onAction="#handleLogout" styleClass="button" />
-            </children>
+        <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label fx:id="welcomeLabel" styleClass="header-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" styleClass="logout-button" onAction="#handleLogout"/>
         </HBox>
     </top>
 
+    <!-- Main Content -->
     <center>
-        <VBox alignment="TOP_CENTER" spacing="20"
-              style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);"
-              styleClass="vbox">
-        <children>
-                <HBox spacing="30" alignment="CENTER">
-                    <children>
-                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
-                            <Label text="" styleClass="label" />
-                            <Label text="Expenses" styleClass="label" />
-                        </VBox>
-                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
-                            <Label text="" styleClass="label" />
-                            <Label text="Net Savings" styleClass="label" />
-                        </VBox>
-                        <VBox alignment="CENTER" spacing="5" styleClass="vbox">
-                            <Label text="" styleClass="label" />
-                            <Label text="Revenue" styleClass="label" />
-                        </VBox>
-                    </children>
-                </HBox>
+        <ScrollPane styleClass="scroll-pane" fitToWidth="true">
+            <content>
+                <VBox spacing="20" styleClass="content-grid">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <!-- Summary Cards -->
+                    <GridPane hgap="15" vgap="15">
+                        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="summary-card">
+                            <Label text="Expenses" styleClass="summary-label"/>
+                            <Label fx:id="expensesLabel" styleClass="summary-value"/>
 
-                <PieChart fx:id="pieChart" title="Spending Breakdown" legendSide="BOTTOM"
-                          prefHeight="300" prefWidth="400" styleClass="chart"/>
-            </children>
-        </VBox>
+                        </VBox>
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="summary-card">
+                            <Label text="Savings" styleClass="summary-label"/>
+                            <Label fx:id="savingsLabel" styleClass="summary-value"/>
+                        </VBox>
+                        <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="summary-card">
+                            <Label text="Revenue" styleClass="summary-label"/>
+                            <Label fx:id="revenueLabel" styleClass="summary-value"/>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- Pie Chart -->
+                    <PieChart fx:id="pieChart" title="Expense Breakdown" styleClass="chart"/>
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 </BorderPane>

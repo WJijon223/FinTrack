@@ -9,27 +9,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane style="-fx-background-color: #0e1624;;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.ForgotController">
+<AnchorPane styleClass="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.ForgotController">
     <children>
-        <VBox fx:id="glassPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="350.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: rgba(255, 255, 255, 0.1);; -fx-background-radius: 20; -fx-border-color: rgba(255,255,255,0.2);; -fx-border-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.1), 10, 0, 0, 0);;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="100.0">
+        <VBox fx:id="glassPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="350.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" styleClass="glass-pane" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="100.0">
             <children>
-                <Label text="Reset your password" textFill="#f3efef">
+                <Label text="Reset your password" styleClass="header-label">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <TextField fx:id="emailField" promptText="Enter Your Email"
-                           style="-fx-background-color: #1a1f2e; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 8;" />
-                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" style="-fx-background-color: #5dc7ff;; -fx-text-fill: white; -fx-background-radius: 8;" text="Reset">
+                <TextField fx:id="emailField" promptText="Enter Your Email" styleClass="text-field" />
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" styleClass="button" text="Reset">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Hyperlink fx:id="backToLoginLink" onAction="#handleBackToLogin"
-                           text="← Back to Login"
-                           style="-fx-text-fill: #5dc7ff;" />
-
+                <Hyperlink fx:id="backToLoginLink" onAction="#handleBackToLogin" text="← Back to Login" styleClass="hyperlink" />
             </children>
             <padding>
                 <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />

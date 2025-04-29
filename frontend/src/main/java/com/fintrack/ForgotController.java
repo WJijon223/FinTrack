@@ -1,6 +1,6 @@
 package com.fintrack;
 
-import javafx.animation.PauseTransition;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,34 +42,18 @@ public class ForgotController {
 
         showAlert("Email Sent", "A password reset link has been sent to: " + email);
 
-        // Simulate delay and transition to Reset.fxml
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(e -> {
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/Reset.fxml"));
-                Stage stage = (Stage) emailField.getScene().getWindow();
-                Scene scene = new Scene(root);
-
-                URL cssUrl = getClass().getResource("/style.css");
-                if (cssUrl != null) {
-                    scene.getStylesheets().add(cssUrl.toExternalForm());
-                }
-
-                stage.setScene(scene);
-                stage.setTitle("Reset Password");
-                stage.show();
-            } catch (IOException ex) {
-                System.err.println("Could not load Reset.fxml");
-                ex.printStackTrace();
-            }
-        });
-        delay.play();
+        // Transition to Reset.fxml with fade effect
+        navigateToScreen("/Reset.fxml", "Reset Password");
     }
 
     @FXML
     private void handleBackToLogin(ActionEvent event) {
+        navigateToScreen("/Login.fxml", "FinTrack Login");
+    }
+
+    private void navigateToScreen(String fxmlPath, String title) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
             Scene scene = new Scene(root);
 
@@ -78,11 +62,24 @@ public class ForgotController {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             }
 
-            stage.setScene(scene);
-            stage.setTitle("FinTrack Login");
-            stage.show();
+            root.getStyleClass().add("light");
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(200), backToLoginLink.getScene().getRoot());
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(e -> {
+                stage.setScene(scene);
+                stage.setTitle(title);
+
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+                stage.show();
+            });
+            fadeOut.play();
         } catch (IOException e) {
-            System.err.println("Could not load Login.fxml");
+            System.err.println("Could not load " + fxmlPath);
             e.printStackTrace();
         }
     }

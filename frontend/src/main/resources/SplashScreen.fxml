@@ -7,32 +7,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane styleClass="root light" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.fintrack.SplashScreenController"
-            prefWidth="920.0" prefHeight="600.0" styleClass="root light">
+            prefWidth="920.0" prefHeight="600.0">
     <children>
-        <VBox alignment="CENTER" spacing="10.0" AnchorPane.topAnchor="0.0"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              styleClass="vbox">
-
-            <ImageView fx:id="logo" fitHeight="200.0" fitWidth="200.0" preserveRatio="true">
+        <VBox alignment="CENTER" spacing="10.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" styleClass="glass-pane">
+            <ImageView fx:id="logo" fitHeight="200.0" fitWidth="200.0" preserveRatio="true" styleClass="image-view">
                 <image>
                     <Image url="@/FinTrackLogo.jpg" />
                 </image>
             </ImageView>
-
             <Text text="FinTrack" styleClass="header-label">
                 <font>
                     <Font name="System Bold Italic" size="30.0" />
                 </font>
             </Text>
-
             <Text text="Track Your Finances Smarter" styleClass="label">
                 <font>
                     <Font name="System Italic" size="16.0" />
                 </font>
             </Text>
-
         </VBox>
     </children>
 </AnchorPane>
