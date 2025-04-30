@@ -21,19 +21,24 @@ This is the backend module of the **FinTrack** personal finance tracker, develop
 
 ### Current DB Connection (Azure)
 ```properties
-spring.datasource.url=jdbc:mysql://<your-azure-server>:3306/fintrack
-spring.datasource.username=<your-username>
-spring.datasource.password=<your-password>
+spring.datasource.url=jdbc:mysql://fintrack-server.mysql.database.azure.com:3306/fintrack_db
+spring.datasource.username=wjdm123
+spring.datasource.password=farm123$
 spring.jpa.hibernate.ddl-auto=update
-✅ April 30 Updates
+
+✅ Updates
+
 Added and tested login + registration API endpoints
 
 Integrated SecurityConfig.java and CustomUserDetailsService.java
 
-Encoded passwords with BCryptPasswordEncoder
+Encoded passwords using BCryptPasswordEncoder
 
-Tested registration with Postman
+Tested user registration using Postman
 
-Confirmed redirects and form login setup
+Verified redirect behavior and login form setup
 
-Merged changes into muhammad-backend and pushed
+Merged updates into muhammad-backend and pushed
+
+vbnet
+Copy code
