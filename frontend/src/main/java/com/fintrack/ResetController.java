@@ -1,5 +1,6 @@
 package com.fintrack;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,7 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
+import java.net.URL;
 
 public class ResetController {
 
@@ -15,10 +19,7 @@ public class ResetController {
     private Hyperlink backToLoginLink;
 
     @FXML
-    private PasswordField confirmPass;
-
-    @FXML
-    private PasswordField newPass;
+    private TextField emailField;
 
     @FXML
     private VBox glassPane;
@@ -27,39 +28,20 @@ public class ResetController {
     private Button saveButton;
 
     @FXML
-    private Label strengthLabel;
-
-    @FXML
     public void initialize() {
-        newPass.setOnKeyReleased(event -> checkStrength());
-    }
-
-    private void checkStrength() {
-        String password = newPass.getText();
-
-        if (password.length() < 6) {
-            strengthLabel.setText("Strength: Weak");
-            strengthLabel.setStyle("-fx-text-fill: red;");
-        } else if (password.matches(".*[A-Z].*") && password.matches(".*[0-9].*")) {
-            strengthLabel.setText("Strength: Strong");
-            strengthLabel.setStyle("-fx-text-fill: limegreen;");
-        } else {
-            strengthLabel.setText("Strength: Medium");
-            strengthLabel.setStyle("-fx-text-fill: orange;");
-        }
+        emailField.requestFocus();
     }
 
     @FXML
     private void handleSave() {
-        String pass1 = newPass.getText();
-        String pass2 = confirmPass.getText();
+        String email = emailField.getText();
 
-        if (pass1.isEmpty() || pass2.isEmpty()) {
-            showAlert("Error", "Please fill out both fields.");
-        } else if (!pass1.equals(pass2)) {
-            showAlert("Mismatch", "Passwords do not match.");
+        if (email.isEmpty()) {
+            showAlert("Error", "Please enter your email.");
+        } else if (!email.contains("@") || !email.contains(".")) {
+            showAlert("Invalid Email", "Please enter a valid email address.");
         } else {
-            showAlert("Success", "Your password has been reset!");
+            showAlert("Success", "An email reset link has been sent!");
             goToLogin();
         }
     }
@@ -70,14 +52,38 @@ public class ResetController {
     }
 
     private void goToLogin() {
+        navigateToScreen("/fxml/Login.fxml", "FinTrack Login");
+    }
+
+    private void navigateToScreen(String fxmlPath, String title) {
         try {
-            // ✅ Fixed the path
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            Scene scene = new Scene(root);
+
+            URL cssUrl = getClass().getResource("/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
+
+            root.getStyleClass().add("light");
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(200), backToLoginLink.getScene().getRoot());
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(e -> {
+                stage.setScene(scene);
+                stage.setTitle(title);
+
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+                stage.show();
+            });
+            fadeOut.play();
         } catch (IOException e) {
-            System.err.println("Failed to load Login.fxml");
+            System.err.println("Failed to load " + fxmlPath);
             e.printStackTrace();
         }
     }

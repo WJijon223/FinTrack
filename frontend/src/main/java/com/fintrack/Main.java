@@ -10,14 +10,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Load FXML
-        var splashURL = getClass().getResource("/fxml/Graph.fxml");
+        var splashURL = getClass().getResource("/fxml/SplashScreen.fxml");
         if (splashURL == null) {
             throw new RuntimeException("SplashScreen.fxml not found in resources!");
         }
         Parent root = FXMLLoader.load(splashURL);
         Scene scene = new Scene(root);
 
-        // Load CSS (update path if needed)
+        // load CSS (update path if needed)
         var cssURL = getClass().getResource("/css/style.css");
 
         if (cssURL == null) {

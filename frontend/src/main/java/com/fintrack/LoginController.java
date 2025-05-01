@@ -26,7 +26,7 @@ public class LoginController {
     private ImageView logo;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     private Hyperlink signupLink;
@@ -37,59 +37,47 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (email.isEmpty() || password.isEmpty()) {
-            showAlert("Missing Information", "Please enter both email and password.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Missing Information");
+            alert.setContentText("Please enter both email and password.");
+            alert.showAndWait();
             return;
         }
 
         try {
-
-
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Dashboard.fxml"));
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("FinTrack Dashboard");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load dashboard.");
         }
     }
 
     @FXML
     void handleForgotPassword(ActionEvent event) {
         try {
-
-
-
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Forgot.fxml"));
             Stage stage = (Stage) forgotLink.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("Forgot Password");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load forgot password screen.");
         }
     }
 
     @FXML
     private void handleSignup(ActionEvent event) {
         try {
-
-
-
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Signup.fxml"));
             Stage stage = (Stage) signupLink.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("Sign Up");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load signup screen.");
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
