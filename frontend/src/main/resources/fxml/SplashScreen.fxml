@@ -8,16 +8,16 @@
 
 <StackPane fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="root light-mode" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.SplashScreenController">
 
-    <!-- Centered Content -->
+
     <VBox alignment="CENTER" spacing="30">
 
-        <!-- Big Logo -->
+
         <ImageView fx:id="logo" fitHeight="280.0" fitWidth="280.0" />
 
-        <!-- Welcome Title -->
+
         <Label style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Welcome to FinTrack" textFill="#e1dddd" />
 
-        <!-- Get Started Button -->
+
         <Button fx:id="getStartedButton" prefHeight="50" prefWidth="200" styleClass="button" text="Get Started" />
 
     </VBox>

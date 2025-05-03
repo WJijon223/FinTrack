@@ -2,12 +2,8 @@ package com.fintrack;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -45,12 +41,13 @@ public class LoginController {
         }
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Dashboard.fxml"));
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("FinTrack Dashboard");
-            stage.show();
-        } catch (IOException e) {
+
+
+            // navigate to dashboard using SceneNavigator
+            SceneNavigator.navigateTo(loginButton, "/fxml/Dashboard.fxml");
+        }
+
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -58,12 +55,11 @@ public class LoginController {
     @FXML
     void handleForgotPassword(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Forgot.fxml"));
-            Stage stage = (Stage) forgotLink.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Forgot Password");
-            stage.show();
-        } catch (IOException e) {
+
+            SceneNavigator.navigateTo(forgotLink, "/fxml/Forgot.fxml");
+        }
+
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -71,11 +67,8 @@ public class LoginController {
     @FXML
     private void handleSignup(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Signup.fxml"));
-            Stage stage = (Stage) signupLink.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Sign Up");
-            stage.show();
+
+            SceneNavigator.navigateTo(signupLink, "/fxml/Signup.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

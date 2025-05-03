@@ -10,7 +10,7 @@ public class Transaction {
     private final StringProperty description = new SimpleStringProperty(this, "description", "");
     private final StringProperty date = new SimpleStringProperty(this, "date", "");
 
-    // Constructor
+    // constructor
     public Transaction(String amount, String type, String category, String description, String date) {
         setAmount(amount);
         setType(type);
@@ -19,7 +19,7 @@ public class Transaction {
         setDate(date);
     }
 
-    // Amount property methods
+    // amount property methods
     public StringProperty amountProperty() {
         return amount;
     }
@@ -32,7 +32,7 @@ public class Transaction {
         amount.set(value);
     }
 
-    // Type property methods
+    // type property methods
     public StringProperty typeProperty() {
         return type;
     }
@@ -45,7 +45,7 @@ public class Transaction {
         type.set(value);
     }
 
-    // Category property methods
+    // category property methods
     public StringProperty categoryProperty() {
         return category;
     }
@@ -58,7 +58,7 @@ public class Transaction {
         category.set(value);
     }
 
-    // Description property methods
+    // descriptpm property methods
     public StringProperty descriptionProperty() {
         return description;
     }
@@ -71,7 +71,7 @@ public class Transaction {
         description.set(value);
     }
 
-    // Date property methods
+    // date property methods
     public StringProperty dateProperty() {
         return date;
     }

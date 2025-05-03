@@ -53,11 +53,13 @@ public class SignupController {
 
     private void navigateToScreen(String fxmlPath, String title) {
         try {
+
+
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage) nameField.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            URL cssUrl = getClass().getResource("/style.css");
+            URL cssUrl = getClass().getResource("/css/style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             }
@@ -78,7 +80,9 @@ public class SignupController {
                 stage.show();
             });
             fadeOut.play();
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             System.err.println("Could not load " + fxmlPath);
             e.printStackTrace();
         }

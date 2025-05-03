@@ -1,170 +1,215 @@
 package com.fintrack;
 
-import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.util.List;
 
 public class TransactionsController {
 
+    // sidebar controller reference
     @FXML
-    private Button homeButton, transactionsButton, expenseBtn, revenueBtn, themeToggleBtn;
-    @FXML
-    private TextField amountField, categoryField, descriptionField;
-    @FXML
-    private DatePicker datePicker;
+    private SidebarController sidebarController;
+
+    // table and columns
     @FXML
     private TableView<Transaction> transactionTable;
-    @FXML
-    private TableColumn<Transaction, String> amountCol, typeCol, categoryCol, descriptionCol, dateCol;
 
-    private String selectedType = "Expense"; // Default
-    private boolean isDarkMode = false;
-    private final ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<Transaction, String> descriptionColumn;
+
+    @FXML
+    private TableColumn<Transaction, Double> amountColumn;
+
+    @FXML
+    private TableColumn<Transaction, String> categoryColumn;
+
+    @FXML
+    private TableColumn<Transaction, LocalDate> dateColumn;
+
+    // form fields for adding transactions
+    @FXML
+    private TextField descriptionField;
+
+    @FXML
+    private TextField amountField;
+
+    @FXML
+    private ComboBox<String> categoryComboBox;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private Button addButton;
+
+    // sample data for visual
+    private ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
-        typeCol.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
-        categoryCol.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
-        descriptionCol.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
 
+
+        // set up sidebar
+        if (sidebarController != null) {
+            sidebarController.setup("transactions");
+
+            // set  up theme change callback
+
+
+            sidebarController.setOnThemeChanged(() -> {
+
+                // spply theme changes if needed
+                updateTheme(sidebarController.isDarkMode());
+            });
+        }
+
+        // configue table columns
+
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        // set up category options
+        categoryComboBox.getItems().addAll(
+                "Food", "Transportation", "Housing", "Entertainment",
+                "Utilities", "Healthcare", "Education", "Other"
+        );
+
+        // set default date to today
+        datePicker.setValue(LocalDate.now());
+
+        // load sample transactions (replace with actual data loading)
+        loadTransactions();
+    }
+
+    private void loadTransactions() {
+        // sample data - replace with actual data loading logic
+        transactions.add(new Transaction("Grocery shopping", 45.67, "Food", LocalDate.now().minusDays(2)));
+        transactions.add(new Transaction("Gas station", 35.50, "Transportation", LocalDate.now().minusDays(5)));
+        transactions.add(new Transaction("Monthly rent", 1200.00, "Housing", LocalDate.now().minusDays(10)));
+        transactions.add(new Transaction("Movie tickets", 24.99, "Entertainment", LocalDate.now().minusDays(3)));
+        transactions.add(new Transaction("Electric bill", 78.35, "Utilities", LocalDate.now().minusDays(7)));
+
+        // set the table data
         transactionTable.setItems(transactions);
     }
 
     @FXML
-    private void navigateToHome() {
-        navigateToScreen("/fxml/Dashboard.fxml", "FinTrack Dashboard");
+    private void handleAddTransaction() {
+        try {
+
+
+
+            String description = descriptionField.getText().trim();
+            if (description.isEmpty()) {
+                showAlert("Error", "Please enter a description");
+                return;
+            }
+
+            Double amount;
+            try {
+                amount = Double.parseDouble(amountField.getText().trim());
+            } catch (NumberFormatException e) {
+                showAlert("Error", "Please enter a valid amount");
+                return;
+            }
+
+            String category = categoryComboBox.getValue();
+            if (category == null || category.isEmpty()) {
+                showAlert("Error", "Please select a category");
+                return;
+            }
+
+            LocalDate date = datePicker.getValue();
+            if (date == null) {
+                showAlert("Error", "Please select a date");
+                return;
+            }
+
+            // create and add transaction
+            Transaction newTransaction = new Transaction(description, amount, category, date);
+            transactions.add(newTransaction);
+
+            // clear  fields
+            clearForm();
+
+        } catch (Exception e) {
+            showAlert("Error", "An error occurred: " + e.getMessage());
+        }
     }
 
     @FXML
-    private void navigateToTransactions() {
-        // Already on Transactions screen
-        System.out.println("Already on Transactions screen.");
-    }
-
-    @FXML
-    private void setExpenseType() {
-        selectedType = "Expense";
-        expenseBtn.setStyle("-fx-background-color: #FF5733; -fx-text-fill: white;");
-        revenueBtn.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white;");
-    }
-
-    @FXML
-    private void setRevenueType() {
-        selectedType = "Revenue";
-        revenueBtn.setStyle("-fx-background-color: #FF5733; -fx-text-fill: white;");
-        expenseBtn.setStyle("-fx-background-color: #4682B4; -fx-text-fill: white;");
-    }
-
-    @FXML
-    private void handleSave() {
-        String amount = amountField.getText();
-        String category = categoryField.getText();
-        String description = descriptionField.getText();
-        String date = (datePicker.getValue() != null) ? datePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")) : "";
-
-        if (amount.isEmpty() || category.isEmpty() || description.isEmpty() || date.isEmpty()) {
-            showAlert("Missing Fields", "Please fill out all fields before saving.");
-            return;
+    private void handleDeleteTransaction() {
+        Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
+        if (selectedTransaction != null) {
+            transactions.remove(selectedTransaction);
         }
 
-        Transaction transaction = new Transaction(amount, selectedType, category, description, date);
-        transactions.add(transaction);
-
-        clearForm();
-    }
-
-    @FXML
-    private void handleCancel() {
-        clearForm();
+        else {
+            showAlert("Error", "Please select a transaction to delete");
+        }
     }
 
     private void clearForm() {
-        amountField.clear();
-        categoryField.clear();
         descriptionField.clear();
-        datePicker.setValue(null);
+        amountField.clear();
+        categoryComboBox.setValue(null);
+        datePicker.setValue(LocalDate.now());
     }
 
-    @FXML
-    private void toggleTheme() {
-        BorderPane root = (BorderPane) amountField.getScene().getRoot();
+    private void showAlert(String title, String message) {
 
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), root);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.8);
-        fadeOut.setOnFinished(event -> {
-            if (isDarkMode) {
-                root.getStyleClass().remove("dark");
-                root.getStyleClass().add("light");
-                themeToggleBtn.setText("🌙");
-            } else {
-                root.getStyleClass().remove("light");
-                root.getStyleClass().add("dark");
-                themeToggleBtn.setText("☀");
-            }
 
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
-            fadeIn.setFromValue(0.8);
-            fadeIn.setToValue(1.0);
-            fadeIn.play();
-        });
-        fadeOut.play();
-
-        isDarkMode = !isDarkMode;
+        System.out.println(title + ": " + message);
+        // Replace with actual alert dialog implementation
     }
 
-    private void navigateToScreen(String fxmlPath, String title) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) homeButton.getScene().getWindow();
-            Scene scene = new Scene(root);
+    private void updateTheme(boolean isDarkMode) {
 
-            URL cssUrl = getClass().getResource("/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            }
+        if (isDarkMode) {
+            //implement later
+        } else {
 
-            root.getStyleClass().add(isDarkMode ? "dark" : "light");
-
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(200), homeButton.getScene().getRoot());
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> {
-                stage.setScene(scene);
-                stage.setTitle(title);
-
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(200), root);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-                stage.show();
-            });
-            fadeOut.play();
-        } catch (IOException e) {
-            System.err.println("Failed to load " + fxmlPath);
-            e.printStackTrace();
         }
     }
 
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+    // transaction class
+    public static class Transaction {
+        private String description;
+        private double amount;
+        private String category;
+        private LocalDate date;
+
+        public Transaction(String description, double amount, String category, LocalDate date) {
+            this.description = description;
+            this.amount = amount;
+            this.category = category;
+            this.date = date;
+        }
+
+        // getters and setters
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+
+        public double getAmount() { return amount; }
+        public void setAmount(double amount) { this.amount = amount; }
+
+        public String getCategory() { return category; }
+        public void setCategory(String category) { this.category = category; }
+
+        public LocalDate getDate() { return date; }
+        public void setDate(LocalDate date) { this.date = date; }
     }
 }

@@ -1,28 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<VBox fx:controller="com.fintrack.SidebarController" styleClass="sidebar" prefWidth="250" spacing="40" alignment="TOP_CENTER"
+<VBox fx:controller="com.fintrack.SidebarController"
+      spacing="25" alignment="TOP_CENTER" prefWidth="90" styleClass="sidebar"
       xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
-    <!-- Sidebar Header (Logo Area) -->
-    <VBox styleClass="sidebar-header" alignment="CENTER" prefHeight="120">
-        <Label text="FinTrack" styleClass="sidebar-logo"/>
+    <!-- logo at top -->
+    <VBox alignment="CENTER" styleClass="sidebar-logo-container">
+        <ImageView fitWidth="60" fitHeight="60" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/FinTrackLogo.jpg" />
+        </ImageView>
     </VBox>
 
-    <!-- Navigation Buttons -->
-    <VBox spacing="20" alignment="TOP_CENTER">
-        <Button text="Dashboard" styleClass="sidebar-button-selected" onAction="#handleDashboard"/>
-        <Button text="Budget" styleClass="sidebar-button" onAction="#handleBudget"/>
-        <Button text="Report" styleClass="sidebar-button" onAction="#handleReport"/>
+    <Separator styleClass="sidebar-separator" />
+
+    <!-- nav buttons -->
+    <VBox spacing="18" alignment="CENTER">
+        <padding>
+            <Insets top="15" />
+        </padding>
+
+        <Button fx:id="homeButton" styleClass="nav-button" onAction="#handleHome">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_home.png" />
+                    </ImageView>
+                    <Label text="Home" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
+
+        <Button fx:id="budgetButton" styleClass="nav-button" onAction="#handleBudget">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_budget.png" />
+                    </ImageView>
+                    <Label text="Budget" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
+
+        <Button fx:id="analyticsButton" styleClass="nav-button" onAction="#handleAnalytics">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_graph.png" />
+                    </ImageView>
+                    <Label text="Analytics" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
+
+        <Button fx:id="transactionsButton" styleClass="nav-button" onAction="#handleTransactions">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_transactions.png" />
+                    </ImageView>
+                    <Label text="Transaction" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
+
+        <Button fx:id="calendarButton" styleClass="nav-button" onAction="#handleCalendar">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_calendar.png" />
+                    </ImageView>
+                    <Label text="Calendar" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
+
+        <Button fx:id="profileButton" styleClass="nav-button" onAction="#handleProfile">
+            <graphic>
+                <VBox alignment="CENTER" styleClass="nav-button-content">
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <Image url="@../images/sidebar_profile.png" />
+                    </ImageView>
+                    <Label text="Profile" styleClass="nav-text" />
+                </VBox>
+            </graphic>
+        </Button>
     </VBox>
 
-    <!-- Bottom Placeholder (for Exit/Settings later) -->
-    <VBox spacing="20" alignment="BOTTOM_CENTER">
-        <!-- Future: Exit or Settings button here -->
-    </VBox>
+    <Region VBox.vgrow="ALWAYS" />
 
+    <!-- theme toggle at bottom -->
+    <Button fx:id="themeToggleBtn" styleClass="theme-toggle-button" onAction="#toggleTheme">
+        <graphic>
+            <VBox alignment="CENTER" styleClass="nav-button-content">
+                <ImageView fx:id="themeIconImage" fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <Image url="@../images/sidebar_darkmode.png" />
+                </ImageView>
+                <Label text="Theme" styleClass="nav-text" />
+            </VBox>
+        </graphic>
+    </Button>
+
+    <padding>
+        <Insets top="20" right="10" bottom="20" left="10" />
+    </padding>
 </VBox>
-

@@ -29,12 +29,12 @@
                 <NumberAxis label="Month"/>
             </xAxis>
             <yAxis>
-                <NumberAxis label="Amount ($)"/>
+                <NumberAxis label="Spendning($)"/>
             </yAxis>
         </LineChart>
     </center>
 
-    <!-- Bottom area for button and summary -->
+    <!-- Bottom area for button/ summary -->
     <bottom>
         <VBox spacing="15" alignment="CENTER_LEFT">
             <padding>

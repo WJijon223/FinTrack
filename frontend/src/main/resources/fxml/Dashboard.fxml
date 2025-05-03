@@ -1,71 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane fx:controller="com.fintrack.DashboardController"
             xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/17"
-            prefWidth="960.0" prefHeight="640.0"
-            style="-fx-background-color: #0e1624;">  <!-- Deep blue background -->
+            xmlns="http://javafx.com/javafx/23.0.1"
+            prefWidth="920.0" prefHeight="600.0"
+            styleClass="root light">
 
-    <!-- Sidebar -->
+    <!-- Left Sidebar -->
     <left>
-        <VBox alignment="TOP_CENTER" spacing="20" prefWidth="80"
-              style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 0 20 20 0;">
-            <padding><Insets top="30" bottom="30"/></padding>
-
-            <Button text="🏠" styleClass="sidebar-button" onAction="#navigateToHome"/>
-            <Button text="💵" styleClass="sidebar-button" onAction="#navigateToReports"/>
-            <Button text="📅" styleClass="sidebar-button" onAction="#navigateToCalendar"/>
-            <Button text="📊" styleClass="sidebar-button" onAction="#navigateToAnalytics"/>
-            <Button text="👤" styleClass="sidebar-button" onAction="#navigateToProfile"/>
-            <Button fx:id="themeToggleBtn" text="🌙" styleClass="sidebar-button" onAction="#toggleTheme"/>
-        </VBox>
+        <fx:include fx:id="sidebar" source="Sidebar.fxml" />
     </left>
 
-    <!-- Topbar -->
+    <!-- Top Bar -->
     <top>
-        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-background-color: transparent;">
-            <padding><Insets top="15" right="20" bottom="10" left="20"/></padding>
-            <Label fx:id="welcomeLabel"
-                   text="Welcome back, Dieunie!"
-                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label fx:id="welcomeLabel" styleClass="header-label"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Logout" onAction="#handleLogout"
-                    style="-fx-background-color: #FF5733; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 20;"/>
+            <Button text="Logout" styleClass="logout-button, modern-danger-button" onAction="#handleLogout"/>
         </HBox>
     </top>
 
-    <!-- Main Content -->
+    <!-- main xcontent -->
     <center>
-        <VBox spacing="25" alignment="TOP_CENTER" style="-fx-padding: 30;">
-            <!-- Summary Cards -->
-            <HBox spacing="20" alignment="CENTER">
-                <VBox spacing="5" alignment="CENTER"
-                      style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 15; -fx-padding: 15 30;">
-                    <Label text="Expenses" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                    <Label fx:id="expensesLabel" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-                </VBox>
-                <VBox spacing="5" alignment="CENTER"
-                      style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 15; -fx-padding: 15 30;">
-                    <Label text="Savings" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                    <Label fx:id="savingsLabel" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-                </VBox>
-                <VBox spacing="5" alignment="CENTER"
-                      style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 15; -fx-padding: 15 30;">
-                    <Label text="Revenue" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                    <Label fx:id="revenueLabel" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-                </VBox>
-            </HBox>
+        <ScrollPane fitToWidth="true" styleClass="content-pane">
+            <content>
+                <VBox spacing="20" styleClass="content-area">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
 
-            <!-- Enlarged Pie Chart -->
-            <PieChart fx:id="pieChart"
-                      title="Expense Breakdown"
-                      prefHeight="800" prefWidth="900"
-                      style="-fx-background-color: rgba(255,255,255,0.96); -fx-border-radius: 15; -fx-background-radius: 15; -fx-padding: 15;"/>
-        </VBox>
+                    <!-- Summary Cards -->
+                    <HBox spacing="20" alignment="CENTER">
+                        <VBox styleClass="summary-card" prefWidth="200">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <Label text="Revenue" styleClass="card-title"/>
+                            <Label fx:id="revenueLabel" text="\$0.00" styleClass="card-value"/>
+                        </VBox>
+
+                        <VBox styleClass="summary-card" prefWidth="200">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <Label text="Expenses" styleClass="card-title"/>
+                            <Label fx:id="expensesLabel" text="\$0.00" styleClass="card-value"/>
+                        </VBox>
+
+                        <VBox styleClass="summary-card" prefWidth="200">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <Label text="Savings" styleClass="card-title"/>
+                            <Label fx:id="savingsLabel" text="\$0.00" styleClass="card-value"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Charts Section -->
+                    <HBox spacing="20" alignment="CENTER">
+                        <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <Label text="Expense Breakdown" styleClass="section-title"/>
+                            <PieChart fx:id="pieChart" legendVisible="true"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Recent Transactions Section -->
+                    <VBox styleClass="transaction-container">
+                        <padding>
+                            <Insets top="15" right="15" bottom="15" left="15"/>
+                        </padding>
+                        <Label text="Recent Transactions" styleClass="section-title"/>
+                        <TableView prefHeight="200">
+                            <columns>
+                                <TableColumn text="Date" prefWidth="120"/>
+                                <TableColumn text="Description" prefWidth="250"/>
+                                <TableColumn text="Category" prefWidth="120"/>
+                                <TableColumn text="Amount" prefWidth="100"/>
+                            </columns>
+                        </TableView>
+                        <Button text="View All Transactions" onAction="#openTransactions"
+                                styleClass="view-all-button" alignment="CENTER_RIGHT">
+                            <VBox.margin>
+                                <Insets top="10" right="0" bottom="0" left="0"/>
+                            </VBox.margin>
+                        </Button>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 </BorderPane>

@@ -42,7 +42,7 @@ public class ForgotController {
 
         showAlert("Email Sent", "A password reset link has been sent to: " + email);
 
-        // Transition to Reset.fxml with fade effect
+        // transition to Reset.fxml with fade effect
         navigateToScreen("/fxml/Reset.fxml", "Reset Password");
     }
 
@@ -57,7 +57,7 @@ public class ForgotController {
             Stage stage = (Stage) backToLoginLink.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            URL cssUrl = getClass().getResource("/style.css");
+            URL cssUrl = getClass().getResource("/css/style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             }

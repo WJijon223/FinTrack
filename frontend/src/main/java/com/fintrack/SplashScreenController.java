@@ -2,14 +2,10 @@ package com.fintrack;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -31,51 +27,30 @@ public class SplashScreenController {
 
 
         // load logo image
-
-
         URL imageUrl = getClass().getResource("/images/FinTrackLogo.jpg");
         if (imageUrl != null) {
-
-
             logo.setImage(new Image(imageUrl.toExternalForm()));
-        } else
+        }
 
-
-        {
+        else {
             System.err.println("Logo image not found!");
         }
 
-
-
         // fade in animation
-
-
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1.5), root);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-
-
         // set up "start" button
-
         getStartedButton.setOnAction(event -> goToLogin());
     }
 
     private void goToLogin() {
-
-
         try {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
 
-            Stage stage = (Stage) logo.getScene().getWindow();
-            stage.setScene(new Scene(loginRoot));
-            stage.show();
-
-
-        }
-
-        catch (IOException e) {
+            SceneNavigator.navigateTo(getStartedButton, "/fxml/Login.fxml");
+        } catch (IOException e) {
             System.err.println("Failed to load Login.fxml");
             e.printStackTrace();
         }
