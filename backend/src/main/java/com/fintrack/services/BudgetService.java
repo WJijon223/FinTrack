@@ -19,10 +19,6 @@ public class BudgetService {
         this.budgetRepository = budgetRepository;
     }
 
-    public boolean existsByMonthAndUser(String month, long userID) {
-        return budgetRepository.findByUser(userID).isPresent();
-    }
-
     // Create or update a budget
     public Budget saveBudget(Budget budget) {
         return budgetRepository.save(budget);
