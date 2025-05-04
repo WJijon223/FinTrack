@@ -21,4 +21,31 @@ public class Budget {
     private User user;
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public BigDecimal getTotalBudget() {
+        return totalBudget;
+    }
+    public void setTotalBudget(BigDecimal totalBudget) {
+        this.totalBudget = totalBudget;
+    }
+
+    public BigDecimal getTotalAmountSpent() {
+        return totalAmountSpent;
+    }
+    public void setTotalAmountSpent(BigDecimal totalAmountSpent) {
+        this.totalAmountSpent = totalAmountSpent;
+    }
 }
