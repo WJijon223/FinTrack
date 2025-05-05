@@ -13,7 +13,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.fxml.FXML?>
 
-<BorderPane fx:id="borderPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.fintrack.BudgetController">
+<BorderPane fx:id="borderPane"
+            prefWidth="1000.0"
+            prefHeight="700.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="com.fintrack.BudgetController">
+
 
 
 

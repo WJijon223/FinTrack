@@ -170,16 +170,6 @@ public class BudgetController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     @FXML
     public void initialize() {
 

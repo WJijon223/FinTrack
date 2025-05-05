@@ -15,7 +15,8 @@ public class Main extends Application {
             throw new RuntimeException("SplashScreen.fxml not found in resources!");
         }
         Parent root = FXMLLoader.load(splashURL);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1000, 700);
+
 
         // load CSS (update path if needed)
         var cssURL = getClass().getResource("/css/style.css");

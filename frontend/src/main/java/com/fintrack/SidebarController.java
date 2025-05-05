@@ -162,17 +162,21 @@ public class SidebarController {
         if (isDarkMode) {
 
             // switch to dark theme
-            themeToggleBtn.getScene().getStylesheets().remove("/css/style.css");
-            themeToggleBtn.getScene().getStylesheets().add("/css/dark.css");
+            themeToggleBtn.getScene().getStylesheets().clear(); // clear existing
+            themeToggleBtn.getScene().getStylesheets().add(
+                    getClass().getResource("/css/dark.css").toExternalForm()
+            );
+
 
             // show  light mode icon in dark mode
             themeIconImage.setImage(new Image(getClass().getResourceAsStream("/images/sidebar_lightmode.png")));
         }
 
         else {
-            // switch  light theme
-            themeToggleBtn.getScene().getStylesheets().remove("/css/dark.css");
-            themeToggleBtn.getScene().getStylesheets().add("/css/style.css");
+            themeToggleBtn.getScene().getStylesheets().clear();
+            themeToggleBtn.getScene().getStylesheets().add(
+                    getClass().getResource("/css/style.css").toExternalForm()
+            );
 
             // show  dark mode icon light mode
             themeIconImage.setImage(new Image(getClass().getResourceAsStream("/images/sidebar_darkmode.png")));

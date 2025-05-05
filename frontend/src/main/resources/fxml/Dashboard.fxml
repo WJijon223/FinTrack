@@ -8,7 +8,7 @@
 <BorderPane fx:controller="com.fintrack.DashboardController"
             xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/23.0.1"
-            prefWidth="920.0" prefHeight="600.0"
+            prefWidth="1000.0" prefHeight="700.0"
             styleClass="root light">
 
     <!-- Left Sidebar -->

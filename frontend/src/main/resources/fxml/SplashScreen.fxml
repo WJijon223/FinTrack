@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="root light-mode" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.SplashScreenController">
+<StackPane fx:id="root" prefHeight="700.0" prefWidth="1000.0" styleClass="root light-mode" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.SplashScreenController">
 
 
     <VBox alignment="CENTER" spacing="30">
