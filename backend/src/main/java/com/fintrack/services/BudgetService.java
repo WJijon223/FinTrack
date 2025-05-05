@@ -19,9 +19,23 @@ public class BudgetService {
         this.budgetRepository = budgetRepository;
     }
 
-    // Create or update a budget
+    // Create a budget
     public Budget saveBudget(Budget budget) {
         return budgetRepository.save(budget);
+    }
+
+    //Update budget by ID
+    public Budget updateBudget(Long id, Budget updatedBudget) {
+        Optional<Budget> optionalBudget = budgetRepository.findById(id);
+        if (optionalBudget.isPresent()) {
+            Budget existingBudget = optionalBudget.get();
+            existingBudget.setMonth(updatedBudget.getMonth());
+            existingBudget.setTotalBudget(updatedBudget.getTotalBudget());
+            existingBudget.setTotalAmountSpent(updatedBudget.getTotalAmountSpent());
+            return budgetRepository.save(existingBudget);
+        } else {
+            throw new RuntimeException("Budget not found with ID: " + id);
+        }
     }
 
     // Retrieve a budget by ID
@@ -30,10 +44,10 @@ public class BudgetService {
     }
 
     // Retrieve all budgets for a specific user
-    public List<Budget> getBudgetsByUser(Long userID) {
-        List<Budget> budgets = budgetRepository.findByUser(userID);
+    public List<Budget> getBudgetsByUser(User user) {
+        List<Budget> budgets = budgetRepository.findByUser(user);
         if (budgets.isEmpty()) {
-            throw new RuntimeException("No budgets found for user with ID: " + userID);
+            throw new RuntimeException("No budgets found for user with ID: " + user.getId());
         }
         return budgets;
     }
