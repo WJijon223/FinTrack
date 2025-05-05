@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users/{userID}/budgets")
 public class BudgetController {
+
     private final BudgetService budgetService;
 
     @Autowired
@@ -18,36 +19,39 @@ public class BudgetController {
         this.budgetService = budgetService;
     }
 
-    //Get all budgets for a specific user
+    // Get all budgets for a specific user
     @GetMapping
     public List<Budget> getBudgetsByUser(@PathVariable Long userID) {
-        User user = new User(); // Replace with actual user retrieval logic
+        User user = new User();
         user.setId(userID);
         return budgetService.getBudgetsByUser(user);
     }
 
-    //Get a budget by ID
+    // Get a budget by ID
     @GetMapping("/{id}")
     public Budget getBudgetById(@PathVariable Long id) {
-        return budgetService.getBudgetById(id).orElseThrow(() -> new RuntimeException("Budget not found with ID: " + id));
+        return budgetService.getBudgetById(id)
+                .orElseThrow(() -> new RuntimeException("Budget not found with ID: " + id));
     }
 
-    //Create or update a budget
+    // Create a new budget for the user
     @PostMapping
-    public Budget saveBudget(@RequestBody Budget budget) {
+    public Budget saveBudget(@PathVariable Long userID, @RequestBody Budget budget) {
+        User user = new User();
+        user.setId(userID);
+        budget.setUser(user);
         return budgetService.saveBudget(budget);
     }
 
-    //Delete a budget by ID
+    // Delete a budget by ID
     @DeleteMapping("/{id}")
     public void deleteBudgetById(@PathVariable Long id) {
         budgetService.deleteBudgetById(id);
     }
 
-    //Update budget by ID
+    // Update an existing budget
     @PutMapping("/{id}")
     public Budget updateBudget(@PathVariable Long id, @RequestBody Budget updatedBudget) {
         return budgetService.updateBudget(id, updatedBudget);
     }
-
 }

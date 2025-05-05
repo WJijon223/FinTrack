@@ -17,7 +17,7 @@ public class Budget {
     private BigDecimal totalAmountSpent;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // Getters and Setters
@@ -47,5 +47,12 @@ public class Budget {
     }
     public void setTotalAmountSpent(BigDecimal totalAmountSpent) {
         this.totalAmountSpent = totalAmountSpent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -22,10 +22,10 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     @Bean
@@ -41,12 +41,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register", "/api/**", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/**").permitAll() // <-- allow everything for now
+                        .anyRequest().permitAll()
                 )
-                .formLogin(form -> form.disable()) // Disable form login redirects
+                .formLogin(form -> form.disable())
                 .logout(logout -> logout.permitAll());
 
         return http.build();

@@ -24,7 +24,7 @@ public class BudgetService {
         return budgetRepository.save(budget);
     }
 
-    //Update budget by ID
+    // Update budget by ID
     public Budget updateBudget(Long id, Budget updatedBudget) {
         Optional<Budget> optionalBudget = budgetRepository.findById(id);
         if (optionalBudget.isPresent()) {
@@ -43,13 +43,9 @@ public class BudgetService {
         return budgetRepository.findById(id);
     }
 
-    // Retrieve all budgets for a specific user
+    // ✅ Retrieve all budgets for a specific user (safe fix)
     public List<Budget> getBudgetsByUser(User user) {
-        List<Budget> budgets = budgetRepository.findByUser(user);
-        if (budgets.isEmpty()) {
-            throw new RuntimeException("No budgets found for user with ID: " + user.getId());
-        }
-        return budgets;
+        return budgetRepository.findByUser(user); // No exception if empty
     }
 
     // Delete a budget by ID
