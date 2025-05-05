@@ -1,128 +1,385 @@
 package com.fintrack;
 
+import com.fintrack.service.Report;
+import com.fintrack.service.ReportService;
+import com.fintrack.service.Report_Dialog;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.util.StringConverter;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import java.text.NumberFormat;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
+import java.util.Map;
+
 
 public class GraphController {
 
     @FXML
-    private Label titleLabel;
+    private PieChart categoryPieChart;
 
     @FXML
-    private LineChart<Number, Number> lineChart;
+    private LineChart<String, Number> expenseTrendChart;
 
     @FXML
-    private Button generateReportButton;
+    private CategoryAxis xAxis;
 
     @FXML
-    private Label summaryLabel;
+    private NumberAxis yAxis;
 
     @FXML
-    private void initialize() {
-        setupChart();
-        setupButton();
+    private Label totalExpensesLabel;
+
+    @FXML
+    private Label averageExpenseLabel;
+
+    @FXML
+    private Label largestExpenseLabel;
+
+    @FXML
+    private ComboBox<String> monthSelector;
+
+    @FXML
+    private ComboBox<Integer> yearSelector;
+
+    @FXML
+    private Button generateReportBtn;
+
+    private Month currentMonth;
+    private int currentYear;
+
+    private Random random = new Random();
+
+    // For animations
+    private final Duration ANIMATION_DURATION = Duration.millis(800);
+
+    private StackPane loadingOverlay;
+    private ProgressIndicator progressIndicator;
+
+    private final ReportService reportService = new ReportService();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private boolean isDarkMode = false; // Set this based on your app's theme
+
+    @FXML
+    public void initialize() {
+        // Initialize months dropdown
+        monthSelector.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Month.values())
+                        .map(this::formatMonth)
+                        .collect(Collectors.toList())
+        ));
+
+        // Initialize years dropdown (e.g., last 5 years)
+        int currentYear = LocalDate.now().getYear();
+        yearSelector.setItems(FXCollections.observableArrayList(
+                IntStream.rangeClosed(currentYear - 4, currentYear)
+                        .boxed()
+                        .collect(Collectors.toList())
+        ));
+
+        // Set current month and year as default
+        this.currentMonth = LocalDate.now().getMonth();
+        this.currentYear = LocalDate.now().getYear();
+        monthSelector.getSelectionModel().select(formatMonth(this.currentMonth));
+        yearSelector.getSelectionModel().select(Integer.valueOf(this.currentYear));
+
+        // Initial data load
+        loadMonthData();
+
+        // Don't try to access the scene here - it's not ready yet
+        // This will be set when updateTheme is called by the main controller
     }
 
-    private void setupChart() {
-        // First, clear any existing data
-        lineChart.getData().clear();
+    @FXML
+    private void handleMonthChange() {
+        String selectedMonth = monthSelector.getValue();
+        if (selectedMonth == null) return;
 
-        // Get the x-axis and set a string converter to display month names
-        NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
+        // Create a mapping of three-letter abbreviations to Month enum values
+        Map<String, Month> monthMap = Map.ofEntries(
+                Map.entry("JAN", Month.JANUARY),
+                Map.entry("FEB", Month.FEBRUARY),
+                Map.entry("MAR", Month.MARCH),
+                Map.entry("APR", Month.APRIL),
+                Map.entry("MAY", Month.MAY),
+                Map.entry("JUN", Month.JUNE),
+                Map.entry("JUL", Month.JULY),
+                Map.entry("AUG", Month.AUGUST),
+                Map.entry("SEP", Month.SEPTEMBER),
+                Map.entry("OCT", Month.OCTOBER),
+                Map.entry("NOV", Month.NOVEMBER),
+                Map.entry("DEC", Month.DECEMBER)
+        );
 
-        // Set tick marks to ensure we hit each month number
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(1);
-        xAxis.setUpperBound(12);
-        xAxis.setTickUnit(1);
 
-        // Create a converter to transform numbers into month names
-        xAxis.setTickLabelFormatter(new StringConverter<Number>() {
-            private final String[] months = {
-                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-            };
+        String abbr = selectedMonth.toUpperCase(Locale.ENGLISH).substring(0, 3);
+        Month month = monthMap.get(abbr);
 
-            @Override
-            public String toString(Number value) {
-                int month = value.intValue();
-                if (month >= 1 && month <= 12) {
-                    return months[month - 1];
-                }
-                return "";
-            }
-
-            @Override
-            public Number fromString(String string) {
-                for (int i = 0; i < months.length; i++) {
-                    if (months[i].equals(string)) {
-                        return i + 1;
-                    }
-                }
-                return null;
-            }
-        });
-
-        // Create Income series
-        XYChart.Series<Number, Number> incomeSeries = new XYChart.Series<>();
-        incomeSeries.setName("Income");
-
-        // Add data points for income (using month numbers 1-12)
-        incomeSeries.getData().add(new XYChart.Data<>(1, 3000)); // Jan
-        incomeSeries.getData().add(new XYChart.Data<>(2, 3200)); // Feb
-        incomeSeries.getData().add(new XYChart.Data<>(3, 3100)); // Mar
-        incomeSeries.getData().add(new XYChart.Data<>(4, 3300)); // Apr
-        incomeSeries.getData().add(new XYChart.Data<>(5, 3500)); // May
-        incomeSeries.getData().add(new XYChart.Data<>(6, 3400)); // Jun
-        incomeSeries.getData().add(new XYChart.Data<>(7, 3600)); // Jul
-        incomeSeries.getData().add(new XYChart.Data<>(8, 3700)); // Aug
-        incomeSeries.getData().add(new XYChart.Data<>(9, 3600)); // Sep
-        incomeSeries.getData().add(new XYChart.Data<>(10, 3800)); // Oct
-        incomeSeries.getData().add(new XYChart.Data<>(11, 3900)); // Nov
-        incomeSeries.getData().add(new XYChart.Data<>(12, 4100)); // Dec
-
-        // Create Expenses series
-        XYChart.Series<Number, Number> expensesSeries = new XYChart.Series<>();
-        expensesSeries.setName("Expenses");
-
-        // Add data points for expenses (using month numbers 1-12)
-        expensesSeries.getData().add(new XYChart.Data<>(1, 2500)); // Jan
-        expensesSeries.getData().add(new XYChart.Data<>(2, 2600)); // Feb
-        expensesSeries.getData().add(new XYChart.Data<>(3, 2700)); // Mar
-        expensesSeries.getData().add(new XYChart.Data<>(4, 2800)); // Apr
-        expensesSeries.getData().add(new XYChart.Data<>(5, 2750)); // May
-        expensesSeries.getData().add(new XYChart.Data<>(6, 2900)); // Jun
-        expensesSeries.getData().add(new XYChart.Data<>(7, 3000)); // Jul
-        expensesSeries.getData().add(new XYChart.Data<>(8, 3100)); // Aug
-        expensesSeries.getData().add(new XYChart.Data<>(9, 3000)); // Sep
-        expensesSeries.getData().add(new XYChart.Data<>(10, 3200)); // Oct
-        expensesSeries.getData().add(new XYChart.Data<>(11, 3300)); // Nov
-        expensesSeries.getData().add(new XYChart.Data<>(12, 3500)); // Dec
-
-        // Add both series to the chart
-        lineChart.getData().add(incomeSeries);
-        lineChart.getData().add(expensesSeries);
-
-        // Make sure the lines are visible
-        lineChart.setCreateSymbols(true);
-        lineChart.setAnimated(false); // Sometimes animations can cause display issues
+        if (month != null && month != currentMonth) {
+            currentMonth = month;
+            animateDataChange();
+        }
     }
 
-    private void setupButton() {
-        generateReportButton.setOnAction(event -> {
-            // Report generation logic
-            double totalIncome = 42200; // Calculate this based on your actual data
-            double totalExpenses = 35350; // Calculate this based on your actual data
-            double netSavings = totalIncome - totalExpenses;
+    @FXML
+    private void handleYearChange() {
+        Integer year = yearSelector.getValue();
+        if (year != currentYear) {
+            currentYear = year;
+            animateDataChange();
+        }
+    }
 
-            summaryLabel.setText(String.format(
-                    "Year to Date Summary: Total Income: $%.2f, Total Expenses: $%.2f, Net Savings: $%.2f",
-                    totalIncome, totalExpenses, netSavings));
+    @FXML
+    private void handleGenerateReport() {
+        // Show loading overlay
+        if (loadingOverlay == null) {
+            createLoadingOverlay();
+        }
+
+        loadingOverlay.setVisible(true);
+        generateReportBtn.setDisable(true);
+
+        // Use the controller's tracked month and year
+        reportService.generateReport(currentYear, currentMonth)
+                .thenAcceptAsync(report -> {
+                    // When complete, hide loading and show report dialog
+                    javafx.application.Platform.runLater(() -> {
+                        loadingOverlay.setVisible(false);
+                        generateReportBtn.setDisable(false);
+
+                        // Create and show report dialog - adjust constructor params if needed
+                        try {
+                            Report_Dialog dialog = new Report_Dialog(report, isDarkMode);
+                            dialog.show();
+                        } catch (Exception e) {
+                            System.err.println("Error showing report dialog: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    });
+                })
+                .exceptionally(e -> {
+                    // Handle errors
+                    javafx.application.Platform.runLater(() -> {
+                        loadingOverlay.setVisible(false);
+                        generateReportBtn.setDisable(false);
+
+                        // Create error report
+                        Report errorReport = new Report();
+                        errorReport.setTitle("Error Generating Report");
+                        errorReport.setGeneratedOn(LocalDate.now());
+                        errorReport.setSummary("There was an error generating your report");
+                        errorReport.setErrorMessage(e.getMessage());
+
+                        try {
+                            Report_Dialog dialog = new Report_Dialog(errorReport, isDarkMode);
+                            dialog.show();
+                        } catch (Exception ex) {
+                            System.err.println("Error showing error report dialog: " + ex.getMessage());
+                            ex.printStackTrace();
+                        }
+                    });
+                    return null;
+                });
+    }
+
+    private void createLoadingOverlay() {
+        try {
+            // Make sure the scene is available
+            if (generateReportBtn.getScene() == null) {
+                System.err.println("Scene is not available yet");
+                return;
+            }
+
+            // Get the root BorderPane from the scene graph
+            BorderPane rootPane = (BorderPane) generateReportBtn.getScene().getRoot();
+
+            loadingOverlay = new StackPane();
+            loadingOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+            loadingOverlay.setPrefSize(rootPane.getWidth(), rootPane.getHeight());
+            loadingOverlay.setVisible(false);
+
+            progressIndicator = new ProgressIndicator();
+            progressIndicator.setMaxSize(100, 100);
+            loadingOverlay.getChildren().add(progressIndicator);
+
+            // Add to your scene graph
+            rootPane.getChildren().add(loadingOverlay);
+
+            // Make sure it covers the entire area
+            loadingOverlay.layoutXProperty().bind(rootPane.layoutXProperty());
+            loadingOverlay.layoutYProperty().bind(rootPane.layoutYProperty());
+            loadingOverlay.prefWidthProperty().bind(rootPane.widthProperty());
+            loadingOverlay.prefHeightProperty().bind(rootPane.heightProperty());
+        } catch (Exception e) {
+            System.err.println("Error creating loading overlay: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void animateDataChange() {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(ANIMATION_DURATION,
+                        event -> loadMonthData()
+                )
+        );
+        timeline.play();
+    }
+
+    private void loadMonthData() {
+        // Get the start and end dates for the selected month
+        YearMonth yearMonth = YearMonth.of(currentYear, currentMonth);
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+
+        // Update UI components with the new data
+        updateCategoryPieChart(startDate, endDate);
+        updateExpenseTrendChart(startDate, endDate);
+        updateStatistics(startDate, endDate);
+    }
+
+    private String formatMonth(Month month) {
+        return month.getDisplayName(TextStyle.FULL, Locale.getDefault());
+    }
+
+    private void updateCategoryPieChart(LocalDate startDate, LocalDate endDate) {
+        // Sample data - replace with actual data from your data source
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Food", 25.0 + random.nextInt(50)),
+                new PieChart.Data("Transportation", 20.0 + random.nextInt(40)),
+                new PieChart.Data("Entertainment", 15.0 + random.nextInt(30)),
+                new PieChart.Data("Housing", 30.0 + random.nextInt(60)),
+                new PieChart.Data("Utilities", 10.0 + random.nextInt(20))
+        );
+
+        categoryPieChart.setData(pieChartData);
+    }
+
+    private void updateExpenseTrendChart(LocalDate startDate, LocalDate endDate) {
+        // Clear existing data
+        expenseTrendChart.getData().clear();
+
+        // Create new series
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Daily Expenses");
+
+        // Sample data - replace with actual data from your data source
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd");
+        for (int i = 1; i <= endDate.getDayOfMonth(); i++) {
+            LocalDate date = startDate.plusDays(i - 1);
+            // Skip future dates
+            if (date.isAfter(LocalDate.now())) {
+                break;
+            }
+            double value = 10.0 + random.nextDouble() * 90.0;
+            series.getData().add(new XYChart.Data<>(date.format(formatter), value));
+        }
+
+        // Add the series to the chart
+        expenseTrendChart.getData().add(series);
+    }
+
+    private void updateStatistics(LocalDate startDate, LocalDate endDate) {
+        // Sample total expenses - replace with actual calculation from your data
+        double totalExpenses = 1200.0 + random.nextDouble() * 800.0;
+        animateValueChange(totalExpensesLabel, totalExpenses);
+
+        // Sample average daily expense
+        int daysInMonth = endDate.getDayOfMonth();
+        double averageDaily = totalExpenses / daysInMonth;
+        animateValueChange(averageExpenseLabel, averageDaily);
+
+        // Sample largest expense
+        double largestExpense = 200.0 + random.nextDouble() * 100.0;
+        animateValueChange(largestExpenseLabel, largestExpense);
+    }
+
+    private void animateValueChange(Label label, double newValue) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+
+        // Get the current value
+        String currentText = label.getText().replaceAll("[^\\d.]", "");
+        double startValue = 0.0;
+        try {
+            if (!currentText.isEmpty()) {
+                startValue = Double.parseDouble(currentText);
+            }
+        } catch (NumberFormatException e) {
+            // In case of parse error, just start from 0
+            startValue = 0.0;
+        }
+
+        // Create a double property to animate
+        DoubleProperty animatedValue = new SimpleDoubleProperty(startValue);
+
+        // Add a listener to the property
+        animatedValue.addListener((observable, oldValue, newVal) -> {
+            label.setText(currencyFormat.format(newVal.doubleValue()));
         });
+
+        // Create the animation
+        Timeline timeline = new Timeline();
+
+        // Create the keyframe that changes the property value
+        KeyValue keyValue = new KeyValue(animatedValue, newValue, Interpolator.EASE_OUT);
+        KeyFrame keyFrame = new KeyFrame(ANIMATION_DURATION, keyValue);
+
+        // Add the keyframe to the timeline
+        timeline.getKeyFrames().add(keyFrame);
+
+        // Play the animation
+        timeline.play();
+    }
+
+    public void updateTheme(boolean isDarkMode) {
+        this.isDarkMode = isDarkMode;
+
+        // Update charts and other UI elements for the new theme
+        // Reload data to apply new styles
+        loadMonthData();
+    }
+
+    public void cleanup() {
+        if (executorService != null) {
+            executorService.shutdown();
+        }
     }
 }

@@ -1,92 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox fx:controller="com.fintrack.SidebarController"
-      spacing="25" alignment="TOP_CENTER" prefWidth="90" styleClass="sidebar"
-      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefWidth="90" spacing="25" styleClass="sidebar" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.SidebarController">
 
     <!-- logo at top -->
     <VBox alignment="CENTER" styleClass="sidebar-logo-container">
-        <ImageView fitWidth="60" fitHeight="60" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="60" fitWidth="60" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/FinTrackLogo.jpg" />
         </ImageView>
     </VBox>
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FinTrack" />
 
     <Separator styleClass="sidebar-separator" />
 
     <!-- nav buttons -->
-    <VBox spacing="18" alignment="CENTER">
+    <VBox alignment="CENTER" spacing="18">
         <padding>
             <Insets top="15" />
         </padding>
 
-        <Button fx:id="homeButton" styleClass="nav-button" onAction="#handleHome">
+        <Button fx:id="homeButton" onAction="#handleHome" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_home.png" />
                     </ImageView>
-                    <Label text="Home" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Home" />
                 </VBox>
             </graphic>
         </Button>
 
-        <Button fx:id="budgetButton" styleClass="nav-button" onAction="#handleBudget">
+        <Button fx:id="budgetButton" onAction="#handleBudget" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_budget.png" />
                     </ImageView>
-                    <Label text="Budget" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Budget" />
                 </VBox>
             </graphic>
         </Button>
 
-        <Button fx:id="analyticsButton" styleClass="nav-button" onAction="#handleAnalytics">
+        <Button fx:id="analyticsButton" onAction="#handleAnalytics" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_graph.png" />
                     </ImageView>
-                    <Label text="Analytics" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Analytics" />
                 </VBox>
             </graphic>
         </Button>
 
-        <Button fx:id="transactionsButton" styleClass="nav-button" onAction="#handleTransactions">
+        <Button fx:id="transactionsButton" onAction="#handleTransactions" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_transactions.png" />
                     </ImageView>
-                    <Label text="Transaction" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Transaction" />
                 </VBox>
             </graphic>
         </Button>
 
-        <Button fx:id="calendarButton" styleClass="nav-button" onAction="#handleCalendar">
+        <Button fx:id="calendarButton" onAction="#handleCalendar" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_calendar.png" />
                     </ImageView>
-                    <Label text="Calendar" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Calendar" />
                 </VBox>
             </graphic>
         </Button>
 
-        <Button fx:id="profileButton" styleClass="nav-button" onAction="#handleProfile">
+        <Button fx:id="profileButton" onAction="#handleProfile" styleClass="nav-button">
             <graphic>
                 <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
                         <Image url="@../images/sidebar_profile.png" />
                     </ImageView>
-                    <Label text="Profile" styleClass="nav-text" />
+                    <Label styleClass="nav-text" text="Profile" />
                 </VBox>
             </graphic>
         </Button>
@@ -95,18 +98,18 @@
     <Region VBox.vgrow="ALWAYS" />
 
     <!-- theme toggle at bottom -->
-    <Button fx:id="themeToggleBtn" styleClass="theme-toggle-button" onAction="#toggleTheme">
+    <Button fx:id="themeToggleBtn" onAction="#toggleTheme" styleClass="theme-toggle-button">
         <graphic>
             <VBox alignment="CENTER" styleClass="nav-button-content">
-                <ImageView fx:id="themeIconImage" fitWidth="24" fitHeight="24" preserveRatio="true">
+                <ImageView fx:id="themeIconImage" fitHeight="24" fitWidth="24" preserveRatio="true">
                     <Image url="@../images/sidebar_darkmode.png" />
                 </ImageView>
-                <Label text="Theme" styleClass="nav-text" />
+                <Label styleClass="nav-text" text="Theme" />
             </VBox>
         </graphic>
     </Button>
 
     <padding>
-        <Insets top="20" right="10" bottom="20" left="10" />
+        <Insets bottom="20" left="10" right="10" top="20" />
     </padding>
 </VBox>

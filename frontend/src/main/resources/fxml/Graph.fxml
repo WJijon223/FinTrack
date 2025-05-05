@@ -1,51 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-                   xmlns:fx="http://javafx.com/fxml"
-                   fx:controller="com.fintrack.GraphController"
-                   prefWidth="1000.0"
-                   prefHeight="700.0">
-
-<!-- Top area for title -->
-    <top>
-        <HBox alignment="CENTER" spacing="20">
-            <padding>
-                <Insets top="20" bottom="10" />
-            </padding>
-            <Label fx:id="titleLabel" text="Yearly Financial Overview" styleClass="label-title"/>
-        </HBox>
-    </top>
-
-    <!-- Center area for the graph -->
+<BorderPane stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fintrack.GraphController">
+    <left>
+        <fx:include fx:id="sidebar" source="Sidebar.fxml" />
+    </left>
     <center>
-        <LineChart fx:id="lineChart" prefHeight="400.0" prefWidth="800.0">
-            <xAxis>
-                <NumberAxis label="Month"/>
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="Spendning($)"/>
-            </yAxis>
-        </LineChart>
-    </center>
-
-    <!-- Bottom area for button/ summary -->
-    <bottom>
-        <VBox spacing="15" alignment="CENTER_LEFT">
+        <VBox spacing="20.0" styleClass="content">
             <padding>
-                <Insets top="10" bottom="20" left="20" right="20" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <Button fx:id="generateReportButton" text="Generate Year to Date Report" styleClass="button-generate-report"/>
-            <Label fx:id="summaryLabel" text="Summary description goes here..." wrapText="true" maxWidth="800.0" styleClass="label-summary"/>
-        </VBox>
-    </bottom>
 
+            <!-- Header -->
+            <Label text="Analytics" styleClass="page-title">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+
+            <!-- Month Selector -->
+            <HBox spacing="10.0" alignment="CENTER_LEFT" styleClass="filter-controls">
+                <Label text="Select Month:" />
+                <ComboBox fx:id="monthSelector" onAction="#handleMonthChange" prefWidth="150.0" />
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Label text="Year:" />
+                <ComboBox fx:id="yearSelector" onAction="#handleYearChange" prefWidth="100.0" />
+
+                <Button fx:id="generateReportBtn"
+                        text="Generate Report"
+                        styleClass="action-button"
+                        onAction="#handleGenerateReport"/>
+            </HBox>
+
+            <!-- Stats summary -->
+            <HBox spacing="20.0" styleClass="stats-box">
+                <VBox alignment="CENTER" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="Total Expenses" styleClass="stat-label" />
+                    <Label fx:id="totalExpensesLabel" text="\$0.00" styleClass="stat-value">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+                </VBox>
+
+                <VBox alignment="CENTER" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="Average Daily" styleClass="stat-label" />
+                    <Label fx:id="averageExpenseLabel" text="\$0.00" styleClass="stat-value">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+                </VBox>
+
+                <VBox alignment="CENTER" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="Largest Expense" styleClass="stat-label" />
+                    <Label fx:id="largestExpenseLabel" text="\$0.00" styleClass="stat-value">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+
+            <!-- Charts section -->
+            <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                <!-- Category Pie Chart -->
+                <VBox spacing="10.0" HBox.hgrow="ALWAYS" styleClass="chart-container">
+                    <PieChart fx:id="categoryPieChart" title="Expenses by Category" VBox.vgrow="ALWAYS" />
+                </VBox>
+
+                <!-- Expense Trend Chart -->
+                <VBox spacing="10.0" HBox.hgrow="ALWAYS" styleClass="chart-container">
+                    <LineChart fx:id="expenseTrendChart" title="Daily Expense Trend" VBox.vgrow="ALWAYS">
+                        <xAxis>
+                            <CategoryAxis fx:id="xAxis" label="Date" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="yAxis" label="Amount ($)" />
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
 </BorderPane>
