@@ -14,31 +14,34 @@ This is the backend module of the **FinTrack** personal finance tracker, develop
 - **MySQL (Azure Hosted)**
 
 ### Branching
-- This work is done on: `muhammad-backend`
-- Purpose: Track individual backend development work
-- A separate branch `test-william` was created to safely test William’s updates before merging
-- After confirming everything worked, `test-william` was merged into `muhammad-backend` and pushed
+- This work is done on: `william-backend`
+- Purpose: Track individual backend development progress
+- Collaborated closely with Muhammad to align on database structure and API design
+- A separate test branch (`test-william`) was used for safe testing before merging into main backend branches
 
-### Current DB Connection (Azure)
-```properties
-spring.datasource.url=jdbc:mysql://fintrack-server.mysql.database.azure.com:3306/fintrack_db
-spring.datasource.username=wjdm123
-spring.datasource.password=farm123$
-spring.jpa.hibernate.ddl-auto=update
+---
 
-✅ Updates
+## 🗄️ Database Design & Integration
 
-Added and tested login + registration API endpoints
+- Designed and created the **MySQL database schema** for the FinTrack project
+- Defined and implemented core **tables** for users, budgets, and transactions
+- Established **foreign key relationships** and constraints for data integrity
+- Connected the **Spring Boot backend** to the **Microsoft Azure-hosted MySQL server**
+- Verified connection stability and tested queries using sample data
 
-Integrated SecurityConfig.java and CustomUserDetailsService.java
+---
 
-Encoded passwords using BCryptPasswordEncoder
+## 🚀 API Development
 
-Tested user registration using Postman
+- Contributed to **API development**, focusing specifically on the **Budget Endpoint**
+- Created RESTful routes for **budget creation, retrieval, update, and deletion**
+- Ensured that budget data correctly maps to the MySQL database using **Spring Data JPA**
+- Handled API response formatting and error handling to improve robustness
 
-Verified redirect behavior and login form setup
+---
 
-Merged updates into muhammad-backend and pushed
+## ✅ Testing & Deployment
 
-vbnet
-Copy code
+- Verified successful database interaction through local testing
+- Used **Postman** to test `GET`, `POST`, `PUT`, and `DELETE` requests for the budget endpoint
+- Collaborated on troubleshooting backend issues related to DB connectivity and request payloads
