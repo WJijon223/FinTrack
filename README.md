@@ -83,7 +83,3 @@ All image assets are organized in the `/images` folder. Key contributions includ
 ## Installation & Run
 
 > This is currently a frontend-only implementation.
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/FinTrack.git
