@@ -79,7 +79,3 @@ All image assets are organized in the `/images` folder. Key contributions includ
 - `transportation_icon.png`
 - `utilities_icon.png`
 
-
-## Installation & Run
-
-> This is currently a frontend-only implementation.
