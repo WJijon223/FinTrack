@@ -48,7 +48,6 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-
     // POST /login endpoint
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginRequest request) {
@@ -62,6 +61,10 @@ public class UserController {
     // POST /register endpoint
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
+        if (user.getPasswordHash() == null || user.getPasswordHash().isEmpty()) {
+            return ResponseEntity.badRequest().body("Password must not be null or empty");
+        }
+
         if (userService.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already in use.");
         }
