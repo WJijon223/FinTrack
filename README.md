@@ -1,44 +1,96 @@
-# FinTrack – Backend (Spring Boot)
+# FinTrack – Backend Submission (Spring Boot + JavaFX Integration)
 
-This is the backend module of the **FinTrack** personal finance tracker, developed using **Spring Boot**, **Java 17**, and connected to **Microsoft Azure MySQL** for database hosting.
+This branch (`muhammad-backend`) includes the backend implementation for FinTrack, a personal finance tracking application. The backend is built using Spring Boot and integrates with a JavaFX frontend. This version includes complete API functionality and frontend connection.
 
 ---
 
-## 🔧 Setup & Configuration
+## 🛠 Tech Stack
 
-### Development Tools:
-- **IntelliJ IDEA**
-- **Spring Boot 3.x**
-- **Java 17**
-- **Maven**
-- **MySQL (Azure Hosted)**
+- **Language:** Java 17
+- **Framework:** Spring Boot 3.x
+- **Frontend:** JavaFX
+- **Database:** MySQL (hosted on Microsoft Azure)
+- **Build Tool:** Maven
+- **IDE:** IntelliJ IDEA
 
-### Branching
-- This work is done on: `muhammad-backend`
-- Purpose: Track individual backend development work
-- A separate branch `test-william` was created to safely test William’s updates before merging
-- After confirming everything worked, `test-william` was merged into `muhammad-backend` and pushed
+---
 
-### Current DB Connection (Azure)
-```properties
-spring.datasource.url=jdbc:mysql://fintrack-server.mysql.database.azure.com:3306/fintrack_db
-spring.datasource.username=wjdm123
-spring.datasource.password=farm123$
-spring.jpa.hibernate.ddl-auto=update
+## 📌 Branch Info
 
-✅ Updates
+- This work was done in the `muhammad-backend` branch.
+- A separate branch `test-william` was used to test teammate updates and later merged for compatibility.
+-  I focused on building, testing, and connecting backend functionality.
 
-Added and tested login + registration API endpoints
+---
 
-Integrated SecurityConfig.java and CustomUserDetailsService.java
+## ✅ Backend Features
 
-Encoded passwords using BCryptPasswordEncoder
+### 1. Authentication & User Management
+- User registration and login endpoints (`/api/users/register`, `/api/users/login`)
+- Password hashing using `BCryptPasswordEncoder`
+- Custom error handling for login failures and duplicate emails
+- Full CRUD for user accounts
 
-Tested user registration using Postman
+### 2. Budget Module
+- Created Budget model, controller, service, and repository
+- Added CRUD operations for `/api/users/{userId}/budgets`
+- Each budget linked to a user
 
-Verified redirect behavior and login form setup
+### 3. Transactions Module
+- Built Transaction entity with amount, type (EXPENSE/INCOME), description, and date
+- Connected each transaction to user and category
+- Implemented `/api/users/{userId}/transactions` with full CRUD
 
-Merged updates into muhammad-backend and pushed
+### 4. Saving Goals
+- SavingGoal entity with goal name, target amount, and progress
+- CRUD endpoints for `/api/users/{userId}/goals`
+- Linked to user and tested with Postman
 
-vbnet
-Copy code
+### 5. Security Configuration
+- Setup `SecurityConfig.java` for Spring Security
+- CSRF disabled for API testing
+- Exposed only `/api/**` endpoints during development
+
+---
+
+## 🧪 API Testing
+
+All endpoints were tested using Postman:
+- Register / Login
+- Budgets, Transactions, Saving Goals (CRUD)
+- Confirmed working with expected response codes (200, 201, 401, 409)
+
+---
+
+## 🔗 Frontend Integration
+
+- JavaFX application now connects to backend endpoints:
+    - Users can register and log in
+    - View and update budgets
+    - Add and manage transactions
+    - Track saving goals
+- All backend responses tested with frontend forms and views
+
+---
+
+## 📁 Structure Overview
+
+├── models/
+├── controllers/
+├── services/
+├── repositories/
+├── config/
+└── FinTrackApplication.java
+
+
+---
+
+## ✅ Final Notes
+
+This backend includes:
+- All required features (auth, budgets, transactions, goals)
+- Full API testing
+- Frontend integration
+- Proper separation of concerns across layers (model, controller, service, repo)
+
+Thanks to teammates for their work on database setup, ERD design, and UI implementation. This branch brings together everything needed for a complete and working version of FinTrack.
