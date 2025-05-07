@@ -62,6 +62,16 @@ All endpoints were tested using Postman:
 
 ---
 
+## 🧪 API Testing (Postman)
+
+Below is one of the  API test results showing successful backend operations:
+
+###  Transaction & Saving Goal
+![POST Transaction](https://github.com/user-attachments/assets/ad63a95f-fb66-42ca-91eb-7ddeb4661389)
+![POST Saving Goal](https://github.com/user-attachments/assets/20ee589a-0912-48af-b3bf-c3db5795442f)
+OST Saving Goal](https://github.com/user-attachments/assets/20ee589a-0912-48af-b3bf-c3db5795442f)
+
+
 ## 🔗 Frontend Integration
 
 - JavaFX application now connects to backend endpoints:
