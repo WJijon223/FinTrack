@@ -6,6 +6,7 @@ import com.fintrack.service.Report_Dialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -99,6 +100,7 @@ public class GraphController {
 
     @FXML
     public void initialize() {
+        // Initialize all your controls first
         // Initialize months dropdown
         monthSelector.setItems(FXCollections.observableArrayList(
                 Arrays.stream(Month.values())
@@ -106,7 +108,7 @@ public class GraphController {
                         .collect(Collectors.toList())
         ));
 
-        // Initialize years dropdown (e.g., last 5 years)
+        // Initialize years dropdown (last 5 years)
         int currentYear = LocalDate.now().getYear();
         yearSelector.setItems(FXCollections.observableArrayList(
                 IntStream.rangeClosed(currentYear - 4, currentYear)
@@ -123,8 +125,17 @@ public class GraphController {
         // Initial data load
         loadMonthData();
 
-        // Don't try to access the scene here - it's not ready yet
-        // This will be set when updateTheme is called by the main controller
+        // run later after everything is initialized
+        Platform.runLater(() -> {
+            try {
+                if (SceneNavigator.isDarkMode() && monthSelector.getScene() != null) {
+                    monthSelector.getScene().getStylesheets().clear();
+                    monthSelector.getScene().getStylesheets().add(getClass().getResource("/css/dark.css").toExternalForm());
+                }
+            } catch (Exception e) {
+                System.err.println("Error applying theme: " + e.getMessage());
+            }
+        });
     }
 
     @FXML
