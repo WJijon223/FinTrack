@@ -27,7 +27,7 @@
                 <TextField fx:id="emailField" promptText="Email" />
                 <PasswordField fx:id="passwordField" promptText="Password" />
                 <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" />
-                <Button fx:id="signupButton" onAction="#handleSignup" style="-fx-background-color: #5dc7ff; -fx-text-fill: white;                                -fx-font-weight: bold; -fx-background-radius: 8;" text="Sign Up" />
+                <Button fx:id="signupButton" onAction="#handleSignup" style="-fx-background-color: #507dbc; -fx-text-fill: white;                                -fx-font-weight: bold; -fx-background-radius: 8;" text="Sign Up" />
                 <Hyperlink fx:id="backToLoginLink" onAction="#handleBackToLogin" style="-fx-text-fill: #5dc7ff;" text="← Back to Login" />
             </children>
         </VBox>

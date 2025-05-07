@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import com.fintrack.ApiService;
+import javafx.scene.control.Alert;
+
 
 import java.io.IOException;
 
@@ -40,17 +43,34 @@ public class LoginController {
             return;
         }
 
+        // Create JSON string for request
+        String json = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", email, password);
+
         try {
+            // Send POST request to backend
+            String response = ApiService.sendPostRequest("http://137.125.154.102:8080/api/users/register", json);
 
 
-            // navigate to dashboard using SceneNavigator
+            // Show success message
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Login Successful");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Welcome! " + response);
+            successAlert.showAndWait();
+
+            // Navigate to Dashboard
             SceneNavigator.navigateTo(loginButton, "/fxml/Dashboard.fxml");
-        }
 
-        catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            // Show error alert
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Login Failed");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Error: " + e.getMessage());
+            errorAlert.showAndWait();
         }
     }
+
 
     @FXML
     void handleForgotPassword(ActionEvent event) {

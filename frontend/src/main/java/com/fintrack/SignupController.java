@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import com.fintrack.ApiService;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +22,7 @@ public class SignupController {
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button signupButton;
     @FXML private Hyperlink backToLoginLink;
+
 
     @FXML
     private void handleSignup() {
@@ -38,9 +41,24 @@ public class SignupController {
             return;
         }
 
-        showAlert("Signup Successful", "Account created for " + name + "!");
-        goToLogin();
+        // Prepare JSON string
+        String json = String.format("{\"name\":\"%s\",\"email\":\"%s\",\"password\":\"%s\"}", name, email, pass1);
+
+        try {
+            // Send registration request to backend
+            String response = ApiService.sendPostRequest("http://137.125.154.102:8080/api/users/register", json);
+
+
+            // Show success message and go to login screen
+            showAlert("Signup Successful", "Account created! You can now log in.");
+            goToLogin();
+
+        } catch (IOException e) {
+            // Show error message from backend
+            showAlert("Signup Failed", "Error: " + e.getMessage());
+        }
     }
+
 
     @FXML
     private void handleBackToLogin() {
