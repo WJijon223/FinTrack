@@ -9,7 +9,6 @@ This is the frontend part of the FinTrack application, built using JavaFX. It he
 - ForgotController.java
 - LoginController.java
 - Main.java
-- ProfileController.java
 - ResetController.java
 - SignupController.java
 - SplashScreenController.java
