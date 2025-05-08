@@ -16,8 +16,8 @@ public class SidebarController {
     @FXML private Button budgetButton;
     @FXML private Button analyticsButton;
     @FXML private Button transactionsButton;
-    @FXML private Button calendarButton;
-    @FXML private Button profileButton;
+
+
     @FXML private Button themeToggleBtn;
     @FXML private Label themeIcon;
 
@@ -31,7 +31,7 @@ public class SidebarController {
         //  initialiaze the list of navigation buttons
         navButtons = Arrays.asList(
                 homeButton, budgetButton, analyticsButton,
-                transactionsButton, calendarButton, profileButton
+                transactionsButton
         );
 
 
@@ -60,12 +60,7 @@ public class SidebarController {
             case "transactions":
                 setActiveButton(transactionsButton);
                 break;
-            case "calendar":
-                setActiveButton(calendarButton);
-                break;
-            case "profile":
-                setActiveButton(profileButton);
-                break;
+
         }
     }
 
@@ -118,30 +113,9 @@ public class SidebarController {
         }
     }
 
-    @FXML
-    private void handleCalendar() {
-        setActiveButton(calendarButton);
-        try {
-            SceneNavigator.navigateTo(calendarButton, "/fxml/Calendar.fxml");
-        }
-
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleProfile() {
-        setActiveButton(profileButton);
-        try {
-            SceneNavigator.navigateTo(profileButton, "/fxml/Profile.fxml");
-        }
 
 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @FXML
     private ImageView themeIconImage;
@@ -159,33 +133,32 @@ public class SidebarController {
     private void toggleTheme() {
         isDarkMode = !isDarkMode;
 
-        if (isDarkMode) {
+        // update SceneNavigator's dark mode state to persist theme across page navigations
+        SceneNavigator.setDarkMode(isDarkMode);
 
+        if (isDarkMode) {
             // switch to dark theme
             themeToggleBtn.getScene().getStylesheets().clear(); // clear existing
             themeToggleBtn.getScene().getStylesheets().add(
                     getClass().getResource("/css/dark.css").toExternalForm()
             );
 
-
-            // show  light mode icon in dark mode
+            // show light mode icon in dark mode
             themeIconImage.setImage(new Image(getClass().getResourceAsStream("/images/sidebar_lightmode.png")));
         }
-
         else {
             themeToggleBtn.getScene().getStylesheets().clear();
             themeToggleBtn.getScene().getStylesheets().add(
                     getClass().getResource("/css/style.css").toExternalForm()
             );
 
-            // show  dark mode icon light mode
+            // show dark mode icon light mode
             themeIconImage.setImage(new Image(getClass().getResourceAsStream("/images/sidebar_darkmode.png")));
 
             //notify parent controller
             if (onThemeChanged != null) {
                 onThemeChanged.run();
             }
-
         }
     }
 
