@@ -72,27 +72,6 @@
             </graphic>
         </Button>
 
-        <Button fx:id="calendarButton" onAction="#handleCalendar" styleClass="nav-button">
-            <graphic>
-                <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
-                        <Image url="@../images/sidebar_calendar.png" />
-                    </ImageView>
-                    <Label styleClass="nav-text" text="Calendar" />
-                </VBox>
-            </graphic>
-        </Button>
-
-        <Button fx:id="profileButton" onAction="#handleProfile" styleClass="nav-button">
-            <graphic>
-                <VBox alignment="CENTER" styleClass="nav-button-content">
-                    <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
-                        <Image url="@../images/sidebar_profile.png" />
-                    </ImageView>
-                    <Label styleClass="nav-text" text="Profile" />
-                </VBox>
-            </graphic>
-        </Button>
     </VBox>
 
     <Region VBox.vgrow="ALWAYS" />
