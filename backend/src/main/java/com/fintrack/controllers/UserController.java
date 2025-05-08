@@ -55,8 +55,12 @@ public class UserController {
         if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
-        return ResponseEntity.ok("Login successful!");
+
+        // ✅ Respond with just the user's name
+        return ResponseEntity.ok(user.getName());
     }
+
+
 
     // POST /register endpoint
     @PostMapping("/register")
