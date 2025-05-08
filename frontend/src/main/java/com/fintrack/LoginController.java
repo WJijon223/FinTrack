@@ -1,34 +1,21 @@
 package com.fintrack;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import com.fintrack.ApiService;
-import javafx.scene.control.Alert;
-
 
 import java.io.IOException;
 
 public class LoginController {
 
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private Hyperlink forgotLink;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private ImageView logo;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Hyperlink signupLink;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private Button loginButton;
+    @FXML private Hyperlink forgotLink;
+    @FXML private Hyperlink signupLink;
+    @FXML private ImageView logo;
 
     @FXML
     void handleLogin(ActionEvent event) {
@@ -36,61 +23,57 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Missing Information");
-            alert.setContentText("Please enter both email and password.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Missing Information", "Please enter both email and password.");
             return;
         }
 
-        // Create JSON string for request
         String json = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", email, password);
 
-        try {
-            // Send POST request to backend
-            String response = ApiService.sendPostRequest("http://137.125.154.102:8080/api/users/register", json);
+        // Background thread to avoid freezing UI
+        new Thread(() -> {
+            try {
+                String response = ApiService.sendPostRequest("http://localhost:8080/api/users/login", json);
 
+                Platform.runLater(() -> {
+                    showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome! " + response);
+                    try {
+                        SceneNavigator.navigateTo(loginButton, "/fxml/Dashboard.fxml");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
-            // Show success message
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("Login Successful");
-            successAlert.setHeaderText(null);
-            successAlert.setContentText("Welcome! " + response);
-            successAlert.showAndWait();
-
-            // Navigate to Dashboard
-            SceneNavigator.navigateTo(loginButton, "/fxml/Dashboard.fxml");
-
-        } catch (IOException e) {
-            // Show error alert
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Login Failed");
-            errorAlert.setHeaderText(null);
-            errorAlert.setContentText("Error: " + e.getMessage());
-            errorAlert.showAndWait();
-        }
+            } catch (IOException e) {
+                Platform.runLater(() ->
+                        showAlert(Alert.AlertType.ERROR, "Login Failed", "Error: " + e.getMessage())
+                );
+            }
+        }).start();
     }
-
 
     @FXML
     void handleForgotPassword(ActionEvent event) {
         try {
-
             SceneNavigator.navigateTo(forgotLink, "/fxml/Forgot.fxml");
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void handleSignup(ActionEvent event) {
+    void handleSignup(ActionEvent event) {
         try {
-
             SceneNavigator.navigateTo(signupLink, "/fxml/Signup.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

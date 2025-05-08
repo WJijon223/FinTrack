@@ -1,6 +1,7 @@
 package com.fintrack;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import com.fintrack.ApiService;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +21,6 @@ public class SignupController {
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button signupButton;
     @FXML private Hyperlink backToLoginLink;
-
 
     @FXML
     private void handleSignup() {
@@ -41,24 +39,29 @@ public class SignupController {
             return;
         }
 
-        // Prepare JSON string
-        String json = String.format("{\"name\":\"%s\",\"email\":\"%s\",\"password\":\"%s\"}", name, email, pass1);
-
-        try {
-            // Send registration request to backend
-            String response = ApiService.sendPostRequest("http://137.125.154.102:8080/api/users/register", json);
+        String json = String.format("{\"name\":\"%s\",\"email\":\"%s\",\"passwordHash\":\"%s\"}", name, email, pass1);
 
 
-            // Show success message and go to login screen
-            showAlert("Signup Successful", "Account created! You can now log in.");
-            goToLogin();
+        signupButton.setDisable(true);  // prevent multiple clicks
 
-        } catch (IOException e) {
-            // Show error message from backend
-            showAlert("Signup Failed", "Error: " + e.getMessage());
-        }
+        // 🔁 Run API request in background thread
+        new Thread(() -> {
+            try {
+                String response = ApiService.sendPostRequest("http://localhost:8080/api/users/register", json);
+
+
+                Platform.runLater(() -> {
+                    showAlert("Signup Successful", "Account created! You can now log in.");
+                    goToLogin();
+                });
+
+            } catch (IOException e) {
+                Platform.runLater(() -> showAlert("Signup Failed", "Error: " + e.getMessage()));
+            } finally {
+                Platform.runLater(() -> signupButton.setDisable(false));
+            }
+        }).start();
     }
-
 
     @FXML
     private void handleBackToLogin() {
@@ -71,8 +74,6 @@ public class SignupController {
 
     private void navigateToScreen(String fxmlPath, String title) {
         try {
-
-
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage) nameField.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -98,9 +99,8 @@ public class SignupController {
                 stage.show();
             });
             fadeOut.play();
-        }
 
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Could not load " + fxmlPath);
             e.printStackTrace();
         }

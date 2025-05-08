@@ -43,13 +43,16 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll() // <-- allow everything for now
-                        .anyRequest().permitAll()
+                        .requestMatchers(
+                                "/api/users/register",
+                                "/api/users/login"
+                        ).permitAll()  // ✅ Allow login and register APIs
+                        .anyRequest().authenticated() // 🔒 Other routes secured
                 )
                 .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable()) // Optional: disable basic auth
                 .logout(logout -> logout.permitAll());
 
         return http.build();
     }
-
 }
