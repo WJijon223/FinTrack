@@ -1,19 +1,19 @@
 package com.fintrack.service;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-
-//dialog for displaying financial report
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class Report_Dialog {
 
@@ -21,14 +21,11 @@ public class Report_Dialog {
     private final boolean isDarkMode;
     private Alert alert;
 
-    // creates a new report dialog
     public Report_Dialog(Report report, boolean isDarkMode) {
         this.report = report;
         this.isDarkMode = isDarkMode;
         this.createDialog();
     }
-
-    //create the dialog with report content
 
     private void createDialog() {
         alert = new Alert(Alert.AlertType.INFORMATION);
@@ -36,12 +33,10 @@ public class Report_Dialog {
         alert.setHeaderText("Report generated on " +
                 report.getGeneratedOn().format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
 
-        //  content area
         GridPane contentPane = new GridPane();
         contentPane.setHgap(10);
         contentPane.setVgap(10);
 
-        //  report summary
         Label summaryLabel = new Label("Summary:");
         summaryLabel.setStyle("-fx-font-weight: bold;");
         TextArea summaryArea = new TextArea(report.getSummary());
@@ -53,7 +48,6 @@ public class Report_Dialog {
         contentPane.add(summaryLabel, 0, 0);
         contentPane.add(summaryArea, 0, 1);
 
-        //  details if available
         if (report.getDetails() != null && !report.getDetails().isEmpty()) {
             Label detailsLabel = new Label("Details:");
             detailsLabel.setStyle("-fx-font-weight: bold;");
@@ -67,7 +61,6 @@ public class Report_Dialog {
             contentPane.add(detailsArea, 0, 3);
         }
 
-        // error message if available
         if (report.getErrorMessage() != null && !report.getErrorMessage().isEmpty()) {
             Label errorLabel = new Label("Error:");
             errorLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #d32f2f;");
@@ -82,40 +75,40 @@ public class Report_Dialog {
         }
 
         alert.getDialogPane().setContent(contentPane);
-
-        // set minimum width for dialog
         alert.getDialogPane().setMinWidth(500);
         alert.getDialogPane().setPrefWidth(600);
 
-        // apply theme styling
         if (isDarkMode) {
             applyDarkTheme(alert.getDialogPane());
         }
-    }
 
-    //s how the report dialog when button pressed
+        // Add Export to PDF button
+        ButtonType exportButton = new ButtonType("Export to PDF", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().add(exportButton);
+
+        // Handle button click
+        alert.setOnCloseRequest(event -> {
+            if (alert.getResult() == exportButton) {
+                exportToPDF();
+            }
+        });
+    }
 
     public Optional<ButtonType> show() {
         return alert.showAndWait();
     }
 
-    // dark theme application
     private void applyDarkTheme(DialogPane dialogPane) {
         dialogPane.getStyleClass().add("dark-theme");
-
-        // apply dark theme to dialog and components
         String darkThemeCSS =
                 "-fx-background-color: #2d2d2d;" +
                         "-fx-text-fill: #e8e8e8;";
-
         dialogPane.setStyle(darkThemeCSS);
 
-        // apply to header
         if (dialogPane.getHeader() != null) {
             dialogPane.getHeader().setStyle(darkThemeCSS + "-fx-font-weight: bold;");
         }
 
-        // apply to text areas and labels
         for (javafx.scene.Node node : dialogPane.getChildren()) {
             if (node instanceof GridPane) {
                 GridPane grid = (GridPane) node;
@@ -133,10 +126,46 @@ public class Report_Dialog {
             }
         }
 
-        // set the icon to match dark theme
         if (dialogPane.getScene() != null && dialogPane.getScene().getWindow() instanceof Stage) {
             Stage stage = (Stage) dialogPane.getScene().getWindow();
             stage.setTitle(report.getTitle());
+        }
+    }
+
+    private void exportToPDF() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Report as PDF");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        java.io.File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try (OutputStream outputStream = new FileOutputStream(file)) {
+                Document document = new Document();
+                PdfWriter.getInstance(document, outputStream);
+                document.open();
+
+                document.add(new Paragraph(report.getTitle()));
+                document.add(new Paragraph("Generated on: " +
+                        report.getGeneratedOn().format(DateTimeFormatter.ofPattern("MMMM d, yyyy"))));
+                document.add(new Paragraph("\nSummary:\n" + report.getSummary()));
+
+                if (report.getDetails() != null && !report.getDetails().isEmpty()) {
+                    document.add(new Paragraph("\nDetails:\n" + report.getDetails()));
+                }
+
+                if (report.getErrorMessage() != null && !report.getErrorMessage().isEmpty()) {
+                    document.add(new Paragraph("\nError:\n" + report.getErrorMessage()));
+                }
+
+                document.close();
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Export Error");
+                errorAlert.setHeaderText("Failed to export report to PDF");
+                errorAlert.setContentText(e.getMessage());
+                errorAlert.showAndWait();
+            }
         }
     }
 }
