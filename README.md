@@ -72,40 +72,41 @@ FinTrack/
 
 ```bash
 mvn spring-boot:run
-🎨 Frontend Setup (JavaFX)
-Open /frontend as a module in IntelliJ.
+```
+### 🎨 Frontend Setup (JavaFX)
+1. Open `/frontend` as a module in IntelliJ.
 
-Run Main.java in the com.fintrack package.
+2. Run Main.java in the com.fintrack package.
 
-Ensure JavaFX SDK and VM options are configured.
+3. Ensure JavaFX SDK and VM options are configured.
 
-🔐 API Endpoints
-Authentication
-POST /api/users/register – Register a user
+## 🔐 API Endpoints
 
-POST /api/users/login – Login
+### 🧾 Authentication
+- `POST /api/users/register` – Register a user  
+- `POST /api/users/login` – Login
 
-Users
-GET /api/users – Get all users
+---
 
-PUT /api/users/{id} – Update a user
+### 👤 Users
+- `GET /api/users` – Get all users  
+- `PUT /api/users/{id}` – Update a user  
+- `DELETE /api/users/{id}` – Delete a user
 
-DELETE /api/users/{id} – Delete a user
+---
 
-Budgets, Transactions, Saving Goals
-All CRUD operations available
-See /backend/controllers for detailed route logic.
+### 💰 Budgets, Transactions, Saving Goals
+- Full CRUD operations supported  
+- See `/backend/controllers` for detailed route logic
 
-🌈 Frontend Highlights
-FXML Screens: Login, Signup, Dashboard, Profile, Transactions, Forgot, Reset
+## 🌈 Frontend Highlights
+- FXML Screens: Login, Signup, Dashboard, Profile, Transactions, Forgot, Reset
 
-Controllers: Scene switching, input validation, animations
+- Controllers: Scene switching, input validation, animations
 
-Themes: Toggle light/dark mode with custom CSS
+- Themes: Toggle light/dark mode with custom CSS
 
-Assets: Sidebar icons, charts, and styled fields
-
-👨## 👨‍💻 Contributors & Roles
+- Assets: Sidebar icons, charts, and styled fields
 
 ## 👥 Contributors & Roles
 
@@ -142,11 +143,14 @@ Assets: Sidebar icons, charts, and styled fields
 - Worked on `jason_merged` to align frontend with backend-ready design  
 
 
-📜 License
+## 📜 License
 This project is licensed under the MIT License. You’re free to use and modify with credit.
 
 📧 Contact
-Muhammad A. Imran – imrama@farmingdale.edu
+- William Jijon – williamjijon223@gmail.com
+- Muhammad A. Imran – imrama@farmingdale.edu
+- Jason M. Maldonado – martj16@farmingdale.edu
+- Dieunie Gousse - gousdm@farmingdale.edu 
 
 Project Repo – GitHub - FinTrack
 
