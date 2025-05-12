@@ -144,10 +144,14 @@ mvn spring-boot:run
 
 ---
 
-### 🧩 Jason M. Maldonado — UI Enhancements & Scene Navigation
+### 🧩 Jason M. Maldonado — Frontend Developer
 - Developed **scene switching system** and sidebar navigation
 - Implemented **dashboard charts** and reusable UI components
-- Worked on `jason_merged` to align frontend with backend-ready design  
+- Worked on `jason_merged` to align frontend with backend-ready design
+- Designed and implemented all **FXML UI screens**
+- Created polished **dark/light themes** and splash screen
+- Handled all **GUI controller logic**, scene transitions, and user navigation
+  
 
 
 ## 📜 License
