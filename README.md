@@ -14,6 +14,13 @@ This collaborative app combines backend functionality with a visually dynamic fr
 
 ---
 
+## 🎥 Video Demo
+
+Watch our quick demo walkthrough of FinTrack in action:  
+[![Watch the demo](https://img.youtube.com/vi/ALf5bgb_v7Q/0.jpg)](https://youtu.be/ALf5bgb_v7Q?si=ksddIB-HRIqWnwC_)
+
+---
+
 ## 💡 Features
 
 - **Secure User Registration & Login** (BCrypt password hashing)
