@@ -115,6 +115,29 @@ mvn spring-boot:run
 
 - Assets: Sidebar icons, charts, and styled fields
 
+### 📸 Screenshots
+
+**Start Screen**
+![Start Screen](assets/start_screen_1_optimized.png)
+
+**Login Screen**
+![Login Screen](assets/login_screen.png)
+
+**Home Menu**
+![Home Menu](assets/home_menu.png)
+
+**Budget Page**
+![Budget Page](assets/budget_page.png)
+
+**Analytics Page**
+![Analytics Page](assets/analytics_gif.gif)
+
+**Report Page**
+![Report Page](assets/report_page.png)
+
+**Transactions Page**
+![Transactions Page](assets/transactions_page.png)
+
 ## 👥 Contributors & Roles
 
 ### 🔧 Muhammad A. Imran — Full Backend Development & Integration
