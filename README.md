@@ -20,7 +20,7 @@ Watch our quick demo walkthrough of FinTrack in action:
 
 Detailed [[Presentation/Demo](https://youtu.be/d7Ji9XbgX3I)]
 
-Short[[Overview](https://youtu.be/ALf5bgb_v7Q)
+Short[[Overview]](https://youtu.be/ALf5bgb_v7Q)
 
 
 
