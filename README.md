@@ -18,7 +18,8 @@ This collaborative app combines backend functionality with a visually dynamic fr
 
 Watch our quick demo walkthrough of FinTrack in action: 
 
-Detailed [Presentation/Demo](https://youtu.be/d7Ji9XbgX3I)
+Detailed [[Presentation/Demo](https://youtu.be/d7Ji9XbgX3I)](url)
+
 
 
 ---
